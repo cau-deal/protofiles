@@ -1,14 +1,19 @@
 syntax = "proto3";
 
-import "google/protobuf/any.proto";
-
-package deal
+package deal;
 
 service AuthService {
   rpc signInWithCredential (SignInRequest) returns (SignInResponse);
-  rpc signInWithToken() return (SignInResponse);
+  rpc signInWithToken (Empty) returns (SignInResponse);
   rpc signUp (SignUpRequest) returns (SignUpResponse);
 }
+
+/// COMMON ///
+// TODO Separate files
+message Empty {
+
+}
+
 
 /// REQUEST ///
 message SignInRequest {
@@ -55,9 +60,8 @@ enum PlatformType {
 }
 
 enum AccountType {
-  UNKNOWN = 0;
-  EMAIL = 1;
-  GOOGLE = 2;
+  EMAIL = 0;
+  GOOGLE = 1;
 }
 
 enum JWTType {
@@ -66,7 +70,6 @@ enum JWTType {
 }
 
 enum ResultCode {
-  UNKNOWN = 0;
-  SUCCESS = 1;
-  ERROR = 2;
+  SUCCESS = 0;
+  ERROR = 1;
 }
