@@ -5,10 +5,10 @@ import "Empty.proto";
 import "PlatformType.proto";
 
 service AuthService {
-  rpc SignInWithCredential (SignInRequest) returns (SignInResponse);
-  rpc SignInWithToken (Empty) returns (SignInResponse);
-  rpc SignUp (SignUpRequest) returns (SignUpResponse);
-  rpc FindPassword (FindPasswordRequest) returns (FindPasswordResponse);
+  rpc signInWithCredential (SignInRequest) returns (SignInResponse);
+  rpc signInWithToken (Empty) returns (SignInResponse);
+  rpc signUp (SignUpRequest) returns (SignUpResponse);
+  rpc findPassword (FindPasswordRequest) returns (FindPasswordResponse);
 }
 
 /// REQUEST ///
