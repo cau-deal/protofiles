@@ -7,6 +7,7 @@ import "PlatformType.proto";
 service AuthService {
   rpc signInWithCredential (SignInRequest) returns (SignInResponse);
   rpc signInWithToken (Empty) returns (SignInResponse);
+  rpc signOut (Empty) returns (SignOutReponse);
   rpc signUp (SignUpRequest) returns (SignUpResponse);
   rpc findPassword (FindPasswordRequest) returns (FindPasswordResponse);
 }
@@ -39,6 +40,10 @@ message JWTResult {
 message SignInResponse {
   CommonResult result = 1;
   repeated JWTResult jwt = 2;  // 0개 이상 가능
+}
+
+message SignOutReponse {
+  CommonResult result = 1;
 }
 
 message SignUpResponse {
