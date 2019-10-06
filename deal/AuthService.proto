@@ -1,13 +1,14 @@
 ﻿syntax = "proto3";
 
-package deal.Auth;
-
+import "CommonResult.proto";
 import "Empty.proto";
+import "PlatformType.proto";
 
 service AuthService {
   rpc SignInWithCredential (SignInRequest) returns (SignInResponse);
   rpc SignInWithToken (Empty) returns (SignInResponse);
   rpc SignUp (SignUpRequest) returns (SignUpResponse);
+  rpc FindPassword (FindPasswordRequest) returns (FindPasswordResponse);
 }
 
 /// REQUEST ///
@@ -24,13 +25,12 @@ message SignUpRequest {
   PlatformType platform = 5;
 }
 
-
-/// RESPONSE ///
-message CommonResult {
-  ResultCode result_code = 1;
-  string message = 2;
+message FindPasswordRequest {
+  string email = 1;
 }
 
+
+/// RESPONSE ///
 message JWTResult {
   JWTType type = 1;
   string token = 2;
@@ -46,14 +46,11 @@ message SignUpResponse {
   repeated JWTResult jwt = 2;
 }
 
-/// ENUM ///
-enum PlatformType {
-  UNKNOWN_PLATFORM_TYPE = 0;
-  ANDROID = 1;
-  IOS = 2;
-  WEB = 3;
+message FindPasswordResponse {
+  CommonResult result = 1;
 }
 
+/// ENUM ///
 enum AccountType {
   UNKNOWN_ACCOUNT_TYPE = 0;
   EMAIL = 1;
@@ -64,10 +61,4 @@ enum JWTType {
   UNKNOWN_JWTTYPE = 0;
   ACCESS = 1;
   REFRESH = 2;
-}
-
-enum ResultCode {
-  UNKNOWN_RESULT_CODE = 0;
-  SUCCESS = 1;
-  ERROR = 2;
 }
