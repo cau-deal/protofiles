@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+/* 아직 미완성 */
+
+import "CommonResult.proto";
+import "Empty.proto";
+
+service UserService {
+  rpc changePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  rpc getUserInfo(Empty) returns (GetInfoResponse);
+}
+
+/// REQUEST ///
+message ChangePasswordRequest {
+  string old_password = 1;
+  string new_password = 2;
+}
+
+/// RESPONSE ///
+message ChangePasswordResponse {
+  CommonResult result = 1;
+}
+
+message GetInfoResponse {
+  CommontResult result = 1;
+  int level = 2;
+  UserState state = 3;
+  Role role = 4;
+  string profile_photo_url = 5;
+}
+
+// ENUM ///
+enum UserState {
+  UNKNOWN_USER_STATE = 0;
+  NORMAL = 1;
+  BANNED = 2;
+  DELETED = 3;
+}
+
+enum Role {
+  UNKNOWN_ROLE = 0;
+  USER = 1;
+  MANAGER = 2;
+  ROOT = 3;
+}
+
+
+
+
+
+

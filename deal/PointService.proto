@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+/* 아직 미완성 */
+
+import "CommonResult.proto";
+import "Empty.proto";
+
+message PointService {
+  rpc lookUpBalance(Empty) returns LookUpBalanceResponse;
+}
+
+/// REQUEST ///
+
+
+/// RESPONSE ///
+message LookUpBalanceResponse {
+  CommonResult result = 1;
+  int balance = 2;
+}
+
+// ENUM ///
