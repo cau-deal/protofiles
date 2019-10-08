@@ -10,7 +10,7 @@ service UserService {
 }
 
 /// REQUEST ///
-/ *
+/*
   로그인 되어 있는 상태에서 비밀번호 변경
 */
 message ChangePasswordRequest {
