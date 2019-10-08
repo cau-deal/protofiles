@@ -45,10 +45,12 @@ message LookUpPointHistoryResponse {
 
 message DepositResponse {
   CommonResult result = 1;
+  DepositResult deposite_result = 2;
 }
 
 message WithdrawResponse {
   CommonResult result = 1;
+  WithdrawResult withdraw_result = 2;
 }
 
 // ENUM ///
@@ -66,4 +68,16 @@ enum DepositType {
   UNKNOWN_DEPOSIT_TYPE = 0;
   DEPOSIT_WITHOUT_BANKBOOK = 1;
   KAKAO_PAY = 2;
+}
+
+enum DepositResult {
+  UNKNOWN_DEPOSIT_RESULT = 0;
+  SUCCESS = 1;
+  FAIL = 2;
+}
+
+enum WithdrawResult {
+  UNKNOWN_WITHDRAW_RESUTL = 0;
+  SUCCESS = 1;
+  FAIL = 2;
 }
