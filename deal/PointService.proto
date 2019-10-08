@@ -8,8 +8,8 @@ service PointService {
   rpc LookUpBalance(Empty) returns (LookUpBalanceResponse);
   rpc LookUpPlusPointHistory(LookUpPointHistoryRequest) returns (LookUpPointHistoryResponse);
   rpc LookUpMinusPointHistory(LookUpPointHistoryRequest) returns (LookUpPointHistoryResponse);
-  rpc Deposit(DepositRequest) return (DepositResponse);
-  rpc Withdraw(WithdrawRequest) return (WithdrawResponse);
+  rpc Deposit(DepositRequest) returns (DepositResponse);
+  rpc Withdraw(WithdrawRequest) returns (WithdrawResponse);
 }
 
 /// REQUEST ///
@@ -22,7 +22,14 @@ message LookUpPointHistoryRequest {
 
 message DepositRequest {
   int64 val = 1;
-  DepositType = 2;
+  DepositType deposit_type = 2;
+}
+
+/*
+  출금은 연동된 계좌로의 출금만 존재한다.
+*/
+message WithdrawRequest {
+  int64 val = 1;
 }
 
 /// Messages ///
@@ -72,12 +79,12 @@ enum DepositType {
 
 enum DepositResult {
   UNKNOWN_DEPOSIT_RESULT = 0;
-  SUCCESS = 1;
-  FAIL = 2;
+  SUCCESS_DEPOSIT_RESULT = 1;
+  FAIL_DEPOSIT_RESULT = 2;
 }
 
 enum WithdrawResult {
   UNKNOWN_WITHDRAW_RESUTL = 0;
-  SUCCESS = 1;
-  FAIL = 2;
+  SUCCESS_WITHDRAW_RESULT = 1;
+  FAIL_WITHDRAW_RESULT = 2;
 }
