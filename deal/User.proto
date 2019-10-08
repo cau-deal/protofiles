@@ -6,7 +6,7 @@ import "Empty.proto";
 service UserService {
   rpc changePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
   rpc changePasswordWithEmail(ChangePasswordWithEmailRequest) returns (ChangePasswordWithEmailResponse);
-  rpc getUserInfo(Empty) returns (GetInfoResponse);
+  rpc lookUpUserInfo(Empty) returns (LookUpUserInfoResponse);
 }
 
 /// REQUEST ///
@@ -36,7 +36,7 @@ message ChangePasswordWithEmailResponse {
   CommonResult result = 1;
 }
 
-message GetInfoResponse {
+message LookUpUserInfoResponse {
   CommonResult result = 1;
   int32 level = 2;
   UserState state = 3;
