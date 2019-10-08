@@ -5,7 +5,7 @@ import "Empty.proto";
 
 service UserService {
   rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
-  rpc ChangePasswordWithEmail(ChangePasswordWithEmailRequest) returns (ChangePasswordWithEmailResponse);
+  rpc ChangePasswordWithEmail(ChangePasswordWithEmailRequest) returns (ChangePasswordResponse);
   rpc LookUpUserInfo(Empty) returns (LookUpUserInfoResponse);
 }
 
@@ -30,10 +30,7 @@ message ChangePasswordWithEmailRequest {
 /// RESPONSE ///
 message ChangePasswordResponse {
   CommonResult result = 1;
-}
-
-message ChangePasswordWithEmailResponse {
-  CommonResult result = 1;
+  ChangePasswordResult change_password_result = 2;
 }
 
 message LookUpUserInfoResponse {
@@ -59,7 +56,11 @@ enum Role {
   ROOT = 3;
 }
 
-
+enum ChangePasswordResult {
+  UNKNOWN_CHANGE_PASSWORD = 0;
+  SUCCESS_CHANGE_PASSWORD = 1;
+  FAIL_CHANGE_PASSWORD = 2;
+}
 
 
 
