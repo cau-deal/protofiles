@@ -8,6 +8,8 @@ service PointService {
   rpc LookUpBalance(Empty) returns (LookUpBalanceResponse);
   rpc LookUpPlusPointHistory(LookUpPointHistoryRequest) returns (LookUpPointHistoryResponse);
   rpc LookUpMinusPointHistory(LookUpPointHistoryRequest) returns (LookUpPointHistoryResponse);
+  rpc Deposit(DepositRequest) return (DepositResponse);
+  rpc Withdraw(WithdrawRequest) return (WithdrawResponse);
 }
 
 /// REQUEST ///
@@ -16,6 +18,11 @@ service PointService {
 */
 message LookUpPointHistoryRequest {
   int32 last_days = 1;
+}
+
+message DepositRequest {
+  int64 val = 1;
+  DepositType = 2;
 }
 
 /// Messages ///
@@ -36,6 +43,14 @@ message LookUpPointHistoryResponse {
   repeated PointHistory point_histories = 2;	// 0개 이상 가능
 }
 
+message DepositResponse {
+  CommonResult result = 1;
+}
+
+message WithdrawResponse {
+  CommonResult result = 1;
+}
+
 // ENUM ///
 enum PointAlterReason {
   UNKNOWN_PointPlusReason = 0;
@@ -47,3 +62,8 @@ enum PointAlterReason {
   MINUS_EVENT = 6;
 }
 
+enum DepositType {
+  UNKNOWN_DEPOSIT_TYPE = 0;
+  DEPOSIT_WITHOUT_BANKBOOK = 1;
+  KAKAO_PAY = 2;
+}
