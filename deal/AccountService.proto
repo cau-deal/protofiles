@@ -1,0 +1,39 @@
+﻿syntax = "proto3";
+
+import "CommonResult.proto";
+
+service AccountService {
+  rpc AccountAuth(AccountAuthRequest) returns (AccountAuthResponse);
+}
+
+/// REQUEST ///
+message AccountAuthRequest {
+  string account_num = 1;
+  string name = 2;
+  BANK bank = 3;
+}
+
+/// Messages ///
+
+
+/// RESPONSE ///
+message AccountAuthResponse {
+  CommonResult result = 1;
+  AccountAuthResult account_auth_result = 2;
+}
+
+/// ENUM ///
+enum BANK {
+  UNKNOWN_BANK = 0;
+  NH = 1;
+  IBK = 2;
+  KB = 3;
+  KAKAO = 4;
+  WOORI = 5;
+}
+
+enum AccountAuthResult {
+  UNKNOWN_ACCOUNT_AUTH_RESULT = 0;
+  SUCCESS_ACCOUNT_AUTH_RESULT = 1;
+  FAIL_ACCOUNT_AUTH_RESULT = 2;
+}
