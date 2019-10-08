@@ -4,9 +4,9 @@ import "CommonResult.proto";
 import "Empty.proto";
 
 service UserService {
-  rpc changePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
-  rpc changePasswordWithEmail(ChangePasswordWithEmailRequest) returns (ChangePasswordWithEmailResponse);
-  rpc lookUpUserInfo(Empty) returns (LookUpUserInfoResponse);
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  rpc ChangePasswordWithEmail(ChangePasswordWithEmailRequest) returns (ChangePasswordWithEmailResponse);
+  rpc LookUpUserInfo(Empty) returns (LookUpUserInfoResponse);
 }
 
 /// REQUEST ///
