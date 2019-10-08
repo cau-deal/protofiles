@@ -1,21 +1,48 @@
 syntax = "proto3";
 
-/* 아직 미완성 */
-
 import "CommonResult.proto";
 import "Empty.proto";
 
 message PointService {
-  rpc lookUpBalance(Empty) returns LookUpBalanceResponse;
+  rpc LookUpBalance(Empty) returns (LookUpBalanceResponse);
+  rpc LookUpPlusPointHistory(LookUpPointHistoryRequest) returns (LookUpPointHistoryResponse);
+  rpc LookUpMinusPointHistory(LookUpPointHistoryRequest) returns (LookUpPointHistoryResponse);
 }
 
 /// REQUEST ///
+/*
+  최근 며칠에 대해 볼 것인지를 정해야 한다.
+*/
+message LookUpPointHistoryRequest {
+  int32 last_days = 1;
+}
 
+/// Messages ///
+message PointHistory {
+  int64 val = 1;
+  PointAlterReason point_alter_reason = 2;
+  Timestamp timestamp = 3;
+}
 
 /// RESPONSE ///
 message LookUpBalanceResponse {
   CommonResult result = 1;
-  int balance = 2;
+  int64 balance = 2;
+}
+
+message LookUpPointHistoryResponse {
+  CommonResult result = 1;
+  repeated PointHistory point_histories = 2;	// 0개 이상 가능
 }
 
 // ENUM ///
+enum PointAlterReason {
+  UNKNOWN_PointPlusReason = 0;
+  DEPOSIT = 1;
+  WITHDRAW = 2;
+  COMPLETE_MISSION = 3;
+  REQUSET_MISSION = 4;
+  PLUS_EVENT = 5;
+  MINUS_EVENT = 6;
+}
+
