@@ -2,8 +2,9 @@
 
 import "CommonResult.proto";
 import "Empty.proto";
+import "Google.Protobuf.WellKnownTypes.Timestamp";
 
-message PointService {
+service PointService {
   rpc LookUpBalance(Empty) returns (LookUpBalanceResponse);
   rpc LookUpPlusPointHistory(LookUpPointHistoryRequest) returns (LookUpPointHistoryResponse);
   rpc LookUpMinusPointHistory(LookUpPointHistoryRequest) returns (LookUpPointHistoryResponse);
