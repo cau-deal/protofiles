@@ -1,12 +1,11 @@
 syntax = "proto3";
 
-/* 아직 미완성 */
-
 import "CommonResult.proto";
 import "Empty.proto";
 
 service UserService {
   rpc changePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  rpc changePasswordWithEmail(ChangePasswordWithEmailRequest) returns (ChangePasswordWithEmailResponse);
   rpc getUserInfo(Empty) returns (GetInfoResponse);
 }
 
@@ -16,14 +15,24 @@ message ChangePasswordRequest {
   string new_password = 2;
 }
 
+message ChangePasswordWithEmailRequest {
+  string email = 1;
+  string old_password = 2;
+  string new_password = 3;
+}
+
 /// RESPONSE ///
 message ChangePasswordResponse {
   CommonResult result = 1;
 }
 
+message ChangePasswordWithEmailResponse {
+  CommonResult result = 1;
+}
+
 message GetInfoResponse {
-  CommontResult result = 1;
-  int level = 2;
+  CommonResult result = 1;
+  int32 level = 2;
   UserState state = 3;
   Role role = 4;
   string profile_photo_url = 5;
