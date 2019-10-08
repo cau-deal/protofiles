@@ -1,10 +1,10 @@
 ﻿syntax = "proto3";
 
 import "CommonResult.proto";
-import "Date";
+import "Date.proto";
 
 service PhoneService {
-  rpc PhoneAuth(PhoneAuthRequest) return (PhoneAuthResponse);
+  rpc PhoneAuth(PhoneAuthRequest) returns (PhoneAuthResponse);
 }
 
 /// REQUEST ///
@@ -22,6 +22,7 @@ message PhoneAuthRequest {
 /// RESPONSE ///
 message PhoneAuthResponse {
   CommonResult result = 1;
+  PhoneResult phone_result = 2;
 }
 
 /// ENUM ///
@@ -44,6 +45,6 @@ enum Sex {
 
 enum PhoneResult {
   UNKNOWN_PHONE_RESULT = 0;
-  SUCCESS = 1;
-  FAIL = 2;
+  SUCCESS_PHONE_RESULT = 1;
+  FAIL_PHONE_RESULT = 2;
 }
