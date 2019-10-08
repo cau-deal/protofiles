@@ -5,17 +5,22 @@ import "Empty.proto";
 import "PlatformType.proto";
 
 service AuthService {
-  rpc signInWithCredential (SignInRequest) returns (SignInResponse);
-  rpc signInWithToken (Empty) returns (SignInResponse);
-  rpc signOut (Empty) returns (SignOutReponse);
-  rpc signUp (SignUpRequest) returns (SignUpResponse);
-  rpc findPassword (FindPasswordRequest) returns (FindPasswordResponse);
+  rpc SignInWithCredential (SignInRequest) returns (SignInResponse);
+  rpc SignInWithGoogle (GoogleSignInRequest) returns (SignInResponse);
+  rpc SignInWithToken (Empty) returns (SignInResponse);
+  rpc SignUp (SignUpRequest) returns (SignUpResponse);
+  rpc FindPassword (FindPasswordRequest) returns (FindPasswordResponse);
 }
 
 /// REQUEST ///
 message SignInRequest {
   string email = 1;
   string password = 2;
+}
+
+message GoogleSignInRequest {
+  SignInRequest credential = 1;
+  GoogleProfile profile = 2;
 }
 
 message SignUpRequest {
@@ -31,6 +36,12 @@ message FindPasswordRequest {
 }
 
 
+/// Messages ///
+message GoogleProfile {
+  string profile_image = 1;
+}
+
+
 /// RESPONSE ///
 message JWTResult {
   JWTType type = 1;
@@ -42,10 +53,6 @@ message SignInResponse {
   repeated JWTResult jwt = 2;  // 0개 이상 가능
 }
 
-message SignOutReponse {
-  CommonResult result = 1;
-}
-
 message SignUpResponse {
   CommonResult result = 1;
   repeated JWTResult jwt = 2;
@@ -53,6 +60,11 @@ message SignUpResponse {
 
 message FindPasswordResponse {
   CommonResult result = 1;
+}
+
+message TokenResponse {
+  CommonResult result = 1;
+  JWTResult jwt = 2;
 }
 
 /// ENUM ///
@@ -63,7 +75,7 @@ enum AccountType {
 }
 
 enum JWTType {
-  UNKNOWN_JWTTYPE = 0;
+  UNKNOWN_JWT_TYPE = 0;
   ACCESS = 1;
   REFRESH = 2;
 }
