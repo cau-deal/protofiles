@@ -1,4 +1,4 @@
-syntax = "proto3";
+ï»¿syntax = "proto3";
 
 import "CommonResult.proto";
 import "Empty.proto";
@@ -11,7 +11,7 @@ message PointService {
 
 /// REQUEST ///
 /*
-  ÃÖ±Ù ¸çÄ¥¿¡ ´ëÇØ º¼ °ÍÀÎÁö¸¦ Á¤ÇØ¾ß ÇÑ´Ù.
+  ìµœê·¼ ë©°ì¹ ì— ëŒ€í•´ ë³¼ ê²ƒì¸ì§€ë¥¼ ì •í•´ì•¼ í•œë‹¤.
 */
 message LookUpPointHistoryRequest {
   int32 last_days = 1;
@@ -32,7 +32,7 @@ message LookUpBalanceResponse {
 
 message LookUpPointHistoryResponse {
   CommonResult result = 1;
-  repeated PointHistory point_histories = 2;	// 0°³ ÀÌ»ó °¡´É
+  repeated PointHistory point_histories = 2;	// 0ê°œ ì´ìƒ ê°€ëŠ¥
 }
 
 // ENUM ///

@@ -1,4 +1,4 @@
-syntax = "proto3";
+ï»¿syntax = "proto3";
 
 import "CommonResult.proto";
 import "Empty.proto";
@@ -11,7 +11,7 @@ service UserService {
 
 /// REQUEST ///
 /*
-  ·Î±×ÀÎ µÇ¾î ÀÖ´Â »óÅÂ¿¡¼­ ºñ¹Ğ¹øÈ£ º¯°æ
+  ë¡œê·¸ì¸ ë˜ì–´ ìˆëŠ” ìƒíƒœì—ì„œ ë¹„ë°€ë²ˆí˜¸ ë³€ê²½
 */
 message ChangePasswordRequest {
   string old_password = 1;
@@ -19,7 +19,7 @@ message ChangePasswordRequest {
 }
 
 /*
-  ºñ¹Ğ¹øÈ£ Ã£±â¸¦ ÅëÇØ, ·Î±×ÀÎ µÇ¾î ÀÖÁö ¾ÊÀº »óÅÂ¿¡¼­ ºñ¹Ğ¹øÈ£ º¯°æ
+  ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°ë¥¼ í†µí•´, ë¡œê·¸ì¸ ë˜ì–´ ìˆì§€ ì•Šì€ ìƒíƒœì—ì„œ ë¹„ë°€ë²ˆí˜¸ ë³€ê²½
 */
 message ChangePasswordWithEmailRequest {
   string email = 1;
