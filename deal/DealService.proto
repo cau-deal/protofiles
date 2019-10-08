@@ -1,0 +1,44 @@
+﻿syntax = "proto3";
+
+import "CommonResult.proto";
+import "Datetime.proto";
+
+service DealService {
+  // 문의하기
+  rpc Inquiry(InquiryRequest) returns (InquiryResponse);
+  // 신고하기
+}
+
+/// REQUEST ///
+message InquiryRequest {
+  Inquiry inquiry = 1;
+}
+
+/// MESSAGES ///
+message Inquiry {
+  string title = 1;
+  string contents = 2;
+  InquiryCategory category = 3;  
+}
+
+message InquiryWithAnswer {
+  Inquiry inquiry = 1;
+  bool is_complete = 2;
+  Datetime created_at = 3;
+  string answer = 4;
+}
+
+/// RESPONSE ///
+message InquiryResponse {
+  CommonResult result = 1;
+  repeated InquiryWithAnswer inquiries = 2;	// 2개 이상 가능
+}
+
+// ENUM ///
+enum InquiryCategory {
+  UNKNOWN_INQUIRY_CATEGORY = 0;
+  POINT = 1;
+  PROJECT = 2;
+  REGISTER = 3;
+  ETC = 4;
+}
