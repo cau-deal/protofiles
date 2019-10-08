@@ -2,13 +2,19 @@
 
 message Data {
   string url = 1;
-  DataState state = 2;
-  int32 mission_id = 3;
+  int32 mission_id = 2;
+  DataState state = 3;
 }
 
 message ProcessedImageData {
   Data data = 1;
   string labeling_result = 2;
+}
+
+message MissionExplanationImage {
+  string url = 1;
+  int32 mission_id = 2;
+  MissionExplanationImageType type = 3;
 }
 
 /// ENUM ///
@@ -51,4 +57,16 @@ enum DataState {
   DURING_VERIFICATION = 4;
   COMPLETE_VERIFICATION = 5;
   RETURN_VERIFICATION = 6;
+}
+
+/*
+  THUMBNAIL : 썸네일
+  BACKGROUND : 배경용
+  MAIN_TEXT : 본문용
+*/
+enum MissionExplanationImageType {
+  UNKNOWN_MISSION_EXPLANATION_IMAGE_TYPE = 0;
+  THUMBNAIL = 1;
+  BACKGROUND = 2;
+  MAIN_TEXT = 3;
 }
