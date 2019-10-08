@@ -1,8 +1,8 @@
 ﻿syntax = "proto3";
 
 import "CommonResult.proto";
+import "Datetime.proto";
 import "Empty.proto";
-import "Google.Protobuf.WellKnownTypes.Timestamp";
 
 service PointService {
   rpc LookUpBalance(Empty) returns (LookUpBalanceResponse);
@@ -22,7 +22,7 @@ message LookUpPointHistoryRequest {
 message PointHistory {
   int64 val = 1;
   PointAlterReason point_alter_reason = 2;
-  Timestamp timestamp = 3;
+  Datetime created_at = 3;
 }
 
 /// RESPONSE ///
