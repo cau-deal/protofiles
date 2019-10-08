@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+
+message Data {
+  string url = 1;
+  DataState state = 2;
+  int32 mission_id = 3;
+}
+
+message ProcessedImageData {
+  Data data = 1;
+  string labeling_result = 2;
+}
+
+/// ENUM ///
+enum DataType {
+  UNKNOWN_DATA_TYPE = 0;
+  IMAGE = 1;
+  SOUND = 2;
+  SURVEY = 3;
+}
+
+enum DataState {
+  UNKNOWN_DATA_STATE = 0;
+}
