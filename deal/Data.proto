@@ -1,0 +1,72 @@
+﻿syntax = "proto3";
+
+message Data {
+  string url = 1;
+  int32 mission_id = 2;
+  DataState state = 3;
+}
+
+message ProcessedImageData {
+  Data data = 1;
+  string labeling_result = 2;
+}
+
+message MissionExplanationImage {
+  string url = 1;
+  int32 mission_id = 2;
+  MissionExplanationImageType type = 3;
+}
+
+/// ENUM ///
+enum DataType {
+  UNKNOWN_DATA_TYPE = 0;
+  IMAGE = 1;
+  SOUND = 2;
+  SURVEY = 3;
+}
+
+/*
+  * DataState 전이에 대한 설명
+
+  (* State *), [ Event ]
+  1. WAITING__PROCESS (가공 대기)
+  2. DURING_PROCESS (가공 중)
+  3. WAITING_VERIFICATION (검수 대기)
+  4. DURING_VERIFICATION (검수 중)
+  5. COMPLETE_VERIFICATION (완료)
+  6. RETURN_VERIFICATION (반려)
+
+  # 수집 미션에 대한 Data State 전이
+  ==[데이터 수집]==> (* 검수 대기 *)
+  ==[검수 시작]==> (* 4. 검수 중 *) ==[A. 검수 통과]==> (* 5. 완료 *)
+                                          ==[B. 검수 반려]==> (* 6. 반려 *)
+
+
+  # 가공 미션에 대한 Data State 전이
+  ==[가공 미션 등록을 위해 data 등록할 경우]==> (* 1. 가공 대기 *)
+  ==[가공 작업자가 수락]==> (* 2. 가공 중 *)
+  ==[가공 완료]==> (* 3. 검수 대기 *)
+  ==[검수 시작]==> (* 4. 검수 중 *) ==[A. 검수 통과]==> (* 5. 완료 *)
+                                          ==[B. 검수 반려]==> (* 6. 반려 *)
+*/
+enum DataState {
+  UNKNOWN_DATA_STATE = 0;
+  WAITING__PROCESS = 1;
+  DURING_PROCESS = 2;
+  WAITING_VERIFICATION = 3;
+  DURING_VERIFICATION = 4;
+  COMPLETE_VERIFICATION = 5;
+  RETURN_VERIFICATION = 6;
+}
+
+/*
+  THUMBNAIL : 썸네일
+  BACKGROUND : 배경용
+  MAIN_TEXT : 본문용
+*/
+enum MissionExplanationImageType {
+  UNKNOWN_MISSION_EXPLANATION_IMAGE_TYPE = 0;
+  THUMBNAIL = 1;
+  BACKGROUND = 2;
+  MAIN_TEXT = 3;
+}

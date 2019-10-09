@@ -1,0 +1,66 @@
+﻿syntax = "proto3";
+
+import "CommonResult.proto";
+import "Empty.proto";
+
+service UserService {
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  rpc ChangePasswordWithEmail(ChangePasswordWithEmailRequest) returns (ChangePasswordResponse);
+  rpc LookUpUserInfo(Empty) returns (LookUpUserInfoResponse);
+}
+
+/// REQUEST ///
+/*
+  로그인 되어 있는 상태에서 비밀번호 변경
+*/
+message ChangePasswordRequest {
+  string old_password = 1;
+  string new_password = 2;
+}
+
+/*
+  비밀번호 찾기를 통해, 로그인 되어 있지 않은 상태에서 비밀번호 변경
+*/
+message ChangePasswordWithEmailRequest {
+  string email = 1;
+  string old_password = 2;
+  string new_password = 3;
+}
+
+/// RESPONSE ///
+message ChangePasswordResponse {
+  CommonResult result = 1;
+  ChangePasswordResult change_password_result = 2;
+}
+
+/*
+  마이페이지 관련 정보들 조회
+*/
+message LookUpUserInfoResponse {
+  CommonResult result = 1;
+  int32 level = 2;
+  UserState state = 3;
+  Role role = 4;
+  string profile_photo_url = 5;
+}
+
+// ENUM ///
+enum UserState {
+  UNKNOWN_USER_STATE = 0;
+  NORMAL = 1;
+  BANNED = 2;
+  DELETED = 3;
+}
+
+enum Role {
+  UNKNOWN_ROLE = 0;
+  USER = 1;
+  MANAGER = 2;
+  ROOT = 3;
+}
+
+enum ChangePasswordResult {
+  UNKNOWN_CHANGE_PASSWORD = 0;
+  SUCCESS_CHANGE_PASSWORD = 1;
+  FAIL_CHANGE_PASSWORD = 2;
+}

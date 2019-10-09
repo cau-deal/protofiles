@@ -1,0 +1,50 @@
+﻿syntax = "proto3";
+
+import "CommonResult.proto";
+import "Date.proto";
+
+service PhoneService {
+  rpc PhoneAuth(PhoneAuthRequest) returns (PhoneAuthResponse);
+}
+
+/// REQUEST ///
+message PhoneAuthRequest {
+  string phone_num = 1;
+  string name = 2;
+  MobileCarrier mobile_carrier = 3;
+  bool is_native = 4;
+  Date birthday = 5;
+}
+
+/// Messages ///
+
+
+/// RESPONSE ///
+message PhoneAuthResponse {
+  CommonResult result = 1;
+  PhoneResult phone_result = 2;
+}
+
+/// ENUM ///
+// 통신사
+enum MobileCarrier {
+  UNKNOWN_MOBILE_CARRIER = 0;
+  KTF = 1;
+  SKT = 2;
+  LGU = 3;
+  KTR = 4;
+  SKR = 5;
+  LGR = 6;
+}
+
+enum Sex {
+  UNKNOWN_SEX = 0;
+  MAN = 1;
+  FEMALE = 2;
+}
+
+enum PhoneResult {
+  UNKNOWN_PHONE_RESULT = 0;
+  SUCCESS_PHONE_RESULT = 1;
+  FAIL_PHONE_RESULT = 2;
+}

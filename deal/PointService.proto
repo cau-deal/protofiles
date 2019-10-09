@@ -1,0 +1,90 @@
+﻿syntax = "proto3";
+
+import "CommonResult.proto";
+import "Datetime.proto";
+import "Empty.proto";
+
+service PointService {
+  rpc LookUpBalance(Empty) returns (LookUpBalanceResponse);
+  rpc LookUpPlusPointHistory(LookUpPointHistoryRequest) returns (LookUpPointHistoryResponse);
+  rpc LookUpMinusPointHistory(LookUpPointHistoryRequest) returns (LookUpPointHistoryResponse);
+  rpc Deposit(DepositRequest) returns (DepositResponse);
+  rpc Withdraw(WithdrawRequest) returns (WithdrawResponse);
+}
+
+/// REQUEST ///
+/*
+  최근 며칠에 대해 볼 것인지를 정해야 한다.
+*/
+message LookUpPointHistoryRequest {
+  int32 last_days = 1;
+}
+
+message DepositRequest {
+  int64 val = 1;
+  DepositType deposit_type = 2;
+}
+
+/*
+  출금은 연동된 계좌로의 출금만 존재한다.
+*/
+message WithdrawRequest {
+  int64 val = 1;
+}
+
+/// Messages ///
+message PointHistory {
+  int64 val = 1;
+  PointAlterReason point_alter_reason = 2;
+  Datetime created_at = 3;
+}
+
+/// RESPONSE ///
+message LookUpBalanceResponse {
+  CommonResult result = 1;
+  int64 balance = 2;
+}
+
+message LookUpPointHistoryResponse {
+  CommonResult result = 1;
+  repeated PointHistory point_histories = 2;	// 0개 이상 가능
+}
+
+message DepositResponse {
+  CommonResult result = 1;
+  DepositResult deposite_result = 2;
+}
+
+message WithdrawResponse {
+  CommonResult result = 1;
+  WithdrawResult withdraw_result = 2;
+}
+
+// ENUM ///
+enum PointAlterReason {
+  UNKNOWN_PointPlusReason = 0;
+  DEPOSIT = 1;
+  WITHDRAW = 2;
+  COMPLETE_MISSION = 3;
+  REQUSET_MISSION = 4;
+  PLUS_EVENT = 5;
+  MINUS_EVENT = 6;
+}
+
+enum DepositType {
+  UNKNOWN_DEPOSIT_TYPE = 0;
+  DEPOSIT_WITHOUT_BANKBOOK = 1;
+  KAKAO_PAY = 2;
+}
+
+enum DepositResult {
+  UNKNOWN_DEPOSIT_RESULT = 0;
+  SUCCESS_DEPOSIT_RESULT = 1;
+  FAIL_DEPOSIT_RESULT = 2;
+}
+
+enum WithdrawResult {
+  UNKNOWN_WITHDRAW_RESUTL = 0;
+  SUCCESS_WITHDRAW_RESULT = 1;
+  FAIL_WITHDRAW_RESULT = 2;
+}

@@ -1,4 +1,4 @@
-syntax = "proto3";
+﻿syntax = "proto3";
 
 message CommonResult {
   ResultCode result_code = 1;

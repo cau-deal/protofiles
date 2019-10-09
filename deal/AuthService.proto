@@ -41,13 +41,12 @@ message GoogleProfile {
   string profile_image = 1;
 }
 
-
-/// RESPONSE ///
 message JWTResult {
   JWTType type = 1;
   string token = 2;
 }
 
+/// RESPONSE ///
 message SignInResponse {
   CommonResult result = 1;
   repeated JWTResult jwt = 2;  // 0개 이상 가능

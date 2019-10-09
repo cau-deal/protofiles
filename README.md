@@ -1,7 +1,9 @@
-﻿# protofiles
+﻿![DEAL!](https://raw.githubusercontent.com/cau-deal/app-design/master/static/mockup.png)
+
+# protofiles
 proto files for gRPC 
 
-style guide는 google developer site를 따릅니다.(단, rpc method만 시작을 소문자로 함)
+style guide는 google developer site를 따릅니다.
 https://developers.google.com/protocol-buffers/docs/style
 
 proto naming convention 정리
@@ -40,7 +42,7 @@ enum에서 0을 UNSPECIFIED를 위해 두는 것을 추천
 
 Service
 service의 이름은 CamelCase를 사용(시작은 대문자)
-service의 RPC method의 이름도 CamelCase(시작은 소문자)를 사용
+service의 RPC method의 이름도 CamelCase(시작은 대문자)를 사용
 
 피해야 할 것(지양해야 할 것)
 field return

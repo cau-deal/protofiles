@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+
+import "CommonResult.proto";
+
+service NotificationService {
+  rpc PostNotice(PostNoticeRequest) returns (PostNoticeResponse);
+}
+
+/// REQUEST ///
+message PostNoticeRequest {
+  string title = 1;
+  string content = 2;
+}
+
+/// Messages ///
+
+
+/// RESPONSE ///
+message PostNoticeResponse {
+  CommonResult result = 1;
+}
+
+
+/// ENUM ///

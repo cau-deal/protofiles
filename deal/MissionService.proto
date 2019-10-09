@@ -1,0 +1,207 @@
+﻿syntax = "proto3";
+
+import "CommonResult.proto";
+import "Empty.proto";
+import "Data.proto";
+import "Datetime.proto";
+
+/*
+  RegistMission : 의뢰 등록
+  SearchMission : 의뢰 검색, type(전체, 수집, 가공)으로도 가능하고, 키워드(optional)로도 가능하다.
+  --> 필터링 기능을 제공한다.(mission의 일부 정보)
+  SearchMissionWithId : mission_id를 사용해 mission 검색(mission의 전체 정보)
+  SearchMissionReleventMe : 마이페이지에 사용할 목적으로, 나와 관련된 Mission들을 조회(mission의 일부 정보)
+  GetAssignedMission : 의뢰를 수락
+  SubmitCollectMissionOutput : 수집 의뢰 결과물 제출
+  SubmitProcessMissionOutput : 가공 의뢰 결과물 제출
+*/
+service MissionService {
+  rpc RegistMission(RegistMissionRequest) returns (RegistMissionResponse);
+  rpc SearchMission(SearchMissionRequest) returns (SearchMissionReponse);
+  rpc SearchMissionWithId(MissionIdRequest) returns (SearchMissionWithIdReponse);
+  rpc SearchMissionReleventMe(SearchMissionReleventMeRequest) returns (SearchMissionReleventMeResponse);
+  rpc GetAssignedMission(MissionIdRequest) returns (GetAssignedMissionResponse);
+  rpc SubmitCollectMissionOutput(SubmitCollectMissionOutputRequest) returns (SubmitCollectMissionOutputResponse);
+  rpc SubmitProcessMissionOutput(SubmitProcessMissionOutputRequest) returns (SubmitProcessMissionOutputResponse);
+}
+
+/// REQUEST ///
+message RegistMissionRequest {
+  Mission mission = 1;
+}
+
+message SearchMissionRequest {
+  MissionType type = 1;
+  string keyworkd = 2;						// 0개 또는 1개(optional)
+}
+
+message MissionIdRequest {
+  int32 mission_id = 1;
+}
+
+message SearchMissionReleventMeRequest {
+  RelevantType type = 1;
+}
+
+message SubmitCollectMissionOutputRequest {
+  int32 mission_id = 1;
+  // data 자체가 복수형이지만, repeated를 강조하기 위해 's'를 붙임 
+  repeated Data datas = 2;						// 0개 이상
+}
+
+message SubmitProcessMissionOutputRequest {
+  int32 mission_id = 1;
+  // data 자체가 복수형이지만, repeated를 강조하기 위해 's'를 붙임
+  repeated ProcessedImageData datas = 2;				// 0개 이상
+}
+
+/// Messages ///
+/*
+  mission_id : mission에 대한 식별자. 고유 번호
+  title : 제목
+  contents : 내용
+  MissionType : 수집 or 가공
+  DataType : 사진 or 소리 or 설문
+  unit_package : 미션을 진행할 단위. ex> 10개, 15개 etc..
+  price_of_package : unit_package당 지불할 금액. ex> 10개가 단위이면, 10개당 1000원
+  deadline : 마감일
+  order_package_quantity : 주문 총량. 총 수집할 데이터의 갯수. (반드시 unit_package의 배수여야 한다)
+  summary : 설명에 들어갈 요약
+  contact_clause : 미션에 대한 약관. 사용자의 동의를 수집하고 싶을 경우 작성.
+  specification : 미션 데이터에 대한 구체적인 명세. ex1> 신호등의 모습이 사진의 각각 가로와 세로의 절반 이상이어야 함.
+                                                               ex2> 음성 수집 미션에서의 지시문 등
+  mission_explanation_image : 미션에 대한 썸네일, 배경, 본문에 들어갈 이미지들 (0개 ~ many)
+*/
+message Mission {
+  int32 mission_id = 1;
+  string title = 2;
+  string contents = 3;
+  MissionType mission_type = 4;
+  DataType data_type = 5;
+  int32 unit_package = 6;
+  int32 price_of_packge = 7;
+  Datetime deadline = 8;
+  int32 order_package_quantity = 9;
+  string summary = 10;						// 0개 또는 1개(optional)
+  string contact_clause = 11;						// 0개 또는 1개(optional)
+  string specification = 12;						// 0개 또는 1개(optional)
+  repeated MissionExplanationImage mission_explanation_images = 13;	// 0개 이상.
+  Datetime created_at = 14;
+}
+
+/*
+  Mission의 일부 정보. 목록을 조회할 때 사용할 용도
+*/
+message MissionProto {
+  int32 mission_id = 1;
+  string title = 2;
+  MissionType type = 4;
+  int32 price_of_packge = 7;
+  Datetime deadline = 8;
+  string summary = 10;					// 0개 또는 1개(optional)
+  string thumbnail_url = 15;					// 0개 또는 1개(optional)
+}
+
+/// RESPONSE ///
+message RegistMissionResponse {
+  CommonResult result = 1;
+  RegistMissionResult regist_mission_result = 2;
+}
+
+message SearchMissionResponse {
+  CommonResult result = 1;
+  SearchMissionResult search_mission_result = 2;
+  repeated MissionProto mission_ptoroes = 3;				// 0개 이상
+}
+
+message SearchMissionWithIdReponse {
+  CommonResult result = 1;
+  SearchMissionResult search_mission_result = 2;
+  Mission mission = 3;
+}
+
+message SearchMissionReleventMeResponse {
+  CommonResult result = 1;
+  SearchMissionResult search_mission_result = 2;
+  // 순서가 동일해야 한다.
+  repeated MissionProto mission_protoes = 3;				// 0개 이상
+  repeated MissionState mission_states = 4;				// 0개 이상
+}
+
+message GetAssignedMissionResponse {
+  CommonResult result = 1;
+  AssignMissionResult assign_mission_result = 2;
+}
+
+message SubmitCollectMissionOutputResponse {
+  CommoneResult result = 1;
+  SubmitResult submit_result = 2;
+}
+
+message SubmitProcessMissionOutputResponse {
+  CommonResult result = 1;
+  SubmitResult submit_result = 2;
+}
+
+/// ENUM ///
+/*
+  * MissionState 전이에 대한 설명
+
+  (* State *), [ Event ]
+  1. DURING_MISSION (진행 중, 작업자에게 할당 가능)
+  2. SOLD_OUT (매진, 미션이 완료되지는 않았지만 작업자에게 할당 불가능(모두 할당되어 진행중인 상태))
+  3. WATING_CONFIRM_PURCHASE (구매 확정 대기)
+  4. COMPLETE_MISSION (완료)
+
+  # 미션 State 전이
+  ==[가공 미션 등록]==> (* 1. 진행 중 *)
+  ==[모두 할당됨]==> (* 2. 매진 *) <==[반려 발생]==
+  ==[가공 완료]==> (* 3. 구매확정 대기 *)
+  ==[구매 최종 결정]==> (* 5. 완료 *)
+
+*/
+enum MissionState {
+  UNKNOWN_MISSION_STATE = 0;
+  DURING_MISSION = 1;
+  SOLD_OUT = 2;
+  WATING_CONFIRM_PURCHASE = 3;
+  COMPLETE_MISSION = 4;
+}
+
+enum MissionType {
+  UNKNOWN_MISSION_TYPE = 0;
+  ALL = 1;
+  COLLECT = 2;
+  PROCESS = 3;
+}
+
+enum RegistMissionResult {
+  UNKNOWN_REGIST_MISSION_RESULT = 0;
+  SUCCESS_REGIST_MISSION_RESULT = 1;
+  FAIL_REGIST_MISSION_RESULT = 2;
+}
+
+enum SearchMissionResult {
+  UNKNOWN_SEARCH_MISSION_RESULT = 0;
+  SUCCESS_SEARCH_MISSION_RESULT = 1;
+  FAIL_SEARCH_MISSION_RESULT = 2;
+}
+
+enum AssignMissionResult {
+  UNKNOWN_ASSIGN_MISSION_RESULT = 0;
+  SUCCESS_ASSIGN_MISSION_RESULT = 1;
+  FAIL_ASSIGN_MISSION_RESULT = 2;
+}
+
+enum SubmitResult {
+  UNKNOWN_SUBMIT_RESULT = 0;
+  SUCCESS_SUBMIT_RESULT = 1;
+  FAIL_SUBMIT_RESUlT = 2;
+}
+
+enum RelevantType {
+  UNKNOWN_RELEVANT_TYPE = 0;
+  ALL = 1;
+  PROCESSING = 2;
+  REGIST = 3;
+}

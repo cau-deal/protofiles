@@ -1,0 +1,70 @@
+﻿syntax = "proto3";
+
+import "CommonResult.proto";
+import "Datetime.proto";
+import "Empty.proto";
+
+service DealService {
+  // 문의하기
+  rpc Inquiry(InquiryRequest) returns (InquiryResponse);
+  // 문의 내역 조회하기
+  rpc LookUpInquiry(Empty) returns (LookUpInquiryResponse);
+  // 신고하기
+  rpc Accuse(AccuseRequest) returns (AccuseResponse);
+}
+
+/// REQUEST ///
+message InquiryRequest {
+  Inquiry inquiry = 1;
+}
+
+message AccuseRequest {
+  int32 mission_id = 1;
+  AccuseCategory category = 2;
+  string contents = 3;
+}
+
+/// MESSAGES ///
+message Inquiry {
+  string title = 1;
+  string contents = 2;
+  InquiryCategory category = 3;  
+}
+
+message InquiryWithAnswer {
+  Inquiry inquiry = 1;
+  bool is_complete = 2;
+  Datetime created_at = 3;
+  string answer = 4;
+}
+
+/// RESPONSE ///
+message InquiryResponse {
+  CommonResult result = 1;
+}
+
+message LookUpInquiryResponse {
+  CommonResult result = 1;
+  repeated InquiryWithAnswer inquiries = 2;	// 2개 이상 가능
+}
+
+message AccuseResponse {
+  CommonResult result = 1;
+}
+
+// ENUM ///
+enum InquiryCategory {
+  UNKNOWN_INQUIRY_CATEGORY = 0;
+  POINT = 1;
+  PROJECT = 2;
+  REGISTER = 3;
+  ETC_INQUIRY = 4;
+}
+
+enum AccuseCategory {
+  UNKNOWN_ACCUSE_CATEGORY = 0;
+  INSULT = 1;
+  ADVERTISEMENT = 2;
+  ADULT = 3;
+  ETC_ACCUSE = 4;
+}
