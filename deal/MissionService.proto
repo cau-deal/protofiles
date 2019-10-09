@@ -134,7 +134,7 @@ message GetAssignedMissionResponse {
 }
 
 message SubmitCollectMissionOutputResponse {
-  CommoneResult result = 1;
+  CommonResult result = 1;
   SubmitResult submit_result = 2;
 }
 
