@@ -14,3 +14,4 @@ protoc -I=./deal --python_out=.. ./deal/PlatformType.proto
 protoc -I=./deal --python_out=.. ./deal/PointService.proto
 protoc -I=./deal --python_out=.. ./deal/UserService.proto
 echo "Compile Done!!"
+echo "Please check debug message of command"
