@@ -8,13 +8,15 @@ service AccountService {
 
 /// REQUEST ///
 message AccountAuthRequest {
+  Account account = 1;
+}
+
+/// Messages ///
+message Account {
   string account_num = 1;
   string name = 2;
   BANK bank = 3;
 }
-
-/// Messages ///
-
 
 /// RESPONSE ///
 message AccountAuthResponse {
