@@ -1,7 +1,6 @@
 ﻿syntax = "proto3";
 
 import "CommonResult.proto";
-import "Empty.proto";
 import "Data.proto";
 import "Datetime.proto";
 
@@ -17,7 +16,7 @@ import "Datetime.proto";
 */
 service MissionService {
   rpc RegistMission(RegistMissionRequest) returns (RegistMissionResponse);
-  rpc SearchMission(SearchMissionRequest) returns (SearchMissionReponse);
+  rpc SearchMission(SearchMissionRequest) returns (SearchMissionResponse);
   rpc SearchMissionWithId(MissionIdRequest) returns (SearchMissionWithIdReponse);
   rpc SearchMissionReleventMe(SearchMissionReleventMeRequest) returns (SearchMissionReleventMeResponse);
   rpc GetAssignedMission(MissionIdRequest) returns (GetAssignedMissionResponse);
@@ -33,6 +32,7 @@ message RegistMissionRequest {
 message SearchMissionRequest {
   MissionType type = 1;
   string keyworkd = 2;						// 0개 또는 1개(optional)
+  MissionPage mission_page = 3;
 }
 
 message MissionIdRequest {
@@ -41,6 +41,7 @@ message MissionIdRequest {
 
 message SearchMissionReleventMeRequest {
   RelevantType type = 1;
+  MissionPage mission_page = 2;
 }
 
 message SubmitCollectMissionOutputRequest {
@@ -143,6 +144,12 @@ message SubmitProcessMissionOutputResponse {
   SubmitResult submit_result = 2;
 }
 
+message MissionPage {
+  MissionPageMode mission_page = 1;
+  int32 from = 2;
+  int32 amount = 3;
+}
+
 /// ENUM ///
 /*
   * MissionState 전이에 대한 설명
@@ -170,9 +177,9 @@ enum MissionState {
 
 enum MissionType {
   UNKNOWN_MISSION_TYPE = 0;
-  ALL = 1;
-  COLLECT = 2;
-  PROCESS = 3;
+  ALL_MISSION_TYPE = 1;
+  COLLECT_MISSION_TYPE = 2;
+  PROCESS_MISSION_TYPE = 3;
 }
 
 enum RegistMissionResult {
@@ -201,7 +208,13 @@ enum SubmitResult {
 
 enum RelevantType {
   UNKNOWN_RELEVANT_TYPE = 0;
-  ALL = 1;
-  PROCESSING = 2;
-  REGIST = 3;
+  ALL_RELEVANT_TYPE = 1;
+  PROCESSING_RELEVANT_TYPE = 2;
+  REGIST_RELEVANT_TYPE = 3;
+}
+
+enum MissionPageMode {
+  UNKNOWN_MISSION_PAGE_MODE = 0;
+  INITIALIZE_MISSION_PAGE = 1;
+  FETCH_MISSION_PAGE = 2;
 }
