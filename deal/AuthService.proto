@@ -50,7 +50,6 @@ message JWTResult {
 message SignInResponse {
   CommonResult result = 1;
   repeated JWTResult jwt = 2;  // 0개 이상 가능
-  string email = 3;
 }
 
 message SignUpResponse {
