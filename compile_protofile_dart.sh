@@ -1,4 +1,7 @@
 #!/bin/bash
+
+rm ./gen/*
+
 protoc -I=./deal --dart_out=grpc:./gen ./deal/AccountService.proto
 protoc -I=./deal --dart_out=grpc:./gen ./deal/AuthService.proto
 protoc -I=./deal --dart_out=grpc:./gen ./deal/CommonResult.proto
