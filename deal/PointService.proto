@@ -21,18 +21,26 @@ message LookUpPointHistoryRequest {
 }
 
 message DepositRequest {
-  int64 val = 1;
-  DepositType deposit_type = 2;
+  Deposit deposit = 1;
 }
 
 /*
   출금은 연동된 계좌로의 출금만 존재한다.
 */
 message WithdrawRequest {
-  int64 val = 1;
+  Withdraw withdraw = 1;
 }
 
 /// Messages ///
+message Deposit {
+  int64 val = 1;
+  DepositType deposit_type = 2;
+}
+
+message Withdraw {
+  int64 val = 1;
+}
+
 message PointHistory {
   int64 val = 1;
   PointAlterReason point_alter_reason = 2;
