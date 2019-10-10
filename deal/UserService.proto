@@ -27,6 +27,16 @@ message ChangePasswordWithEmailRequest {
   string new_password = 3;
 }
 
+/// Messages ///
+message Profile {
+  string email = 1;
+  int32 level = 2;
+  UserState state = 3;
+  Role role = 4;
+  string profile_photo_url = 5;
+  string name = 6;
+}
+
 /// RESPONSE ///
 message ChangePasswordResponse {
   CommonResult result = 1;
@@ -38,11 +48,7 @@ message ChangePasswordResponse {
 */
 message LookUpUserInfoResponse {
   CommonResult result = 1;
-  int32 level = 2;
-  UserState state = 3;
-  Role role = 4;
-  string profile_photo_url = 5;
-  string name = 6;
+  Profile profile = 2;
 }
 
 // ENUM ///
