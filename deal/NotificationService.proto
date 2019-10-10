@@ -8,12 +8,14 @@ service NotificationService {
 
 /// REQUEST ///
 message PostNoticeRequest {
-  string title = 1;
-  string content = 2;
+  Notice notice = 1;
 }
 
 /// Messages ///
-
+message Notice {
+  string title = 1;
+  string content = 2;
+}
 
 /// RESPONSE ///
 message PostNoticeResponse {
