@@ -19,16 +19,20 @@ message InquiryRequest {
 }
 
 message AccuseRequest {
-  int32 mission_id = 1;
-  AccuseCategory category = 2;
-  string contents = 3;
+  Accuse accuse = 1;
 }
 
 /// MESSAGES ///
 message Inquiry {
   string title = 1;
   string contents = 2;
-  InquiryCategory category = 3;  
+  InquiryCategory category = 3;
+}
+
+message Accuse {
+  int32 mission_id = 1;
+  string contents = 2;
+  AccuseCategory category = 3;
 }
 
 message InquiryWithAnswer {
