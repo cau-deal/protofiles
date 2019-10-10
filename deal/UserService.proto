@@ -42,6 +42,7 @@ message LookUpUserInfoResponse {
   UserState state = 3;
   Role role = 4;
   string profile_photo_url = 5;
+  name = 6;
 }
 
 // ENUM ///
