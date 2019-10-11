@@ -6,7 +6,7 @@ import "Datetime.proto";
 
 /*
   RegisterMission : 의뢰 등록
-  SearchMission : 의뢰 검색, type(전체, 수집, 가공)으로도 가능하고, 키워드(optional)로도 가능하다.
+  SearchMission : mission 검색, type(전체, 수집, 가공)으로도 가능하고, 키워드(optional)로도 가능하다.
   --> 필터링 기능을 제공한다.(mission의 일부 정보)
   SearchMissionWithId : mission_id를 사용해 mission 검색(mission의 전체 정보)
   SearchMissionReleventMe : 마이페이지에 사용할 목적으로, 나와 관련된 Mission들을 조회(mission의 일부 정보)
@@ -218,3 +218,4 @@ enum MissionPageMode {
   INITIALIZE_MISSION_PAGE = 1;
   FETCH_MISSION_PAGE = 2;
 }
+
