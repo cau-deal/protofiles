@@ -64,6 +64,7 @@ message SignUpResponse {
 
 message FindPasswordResponse {
   CommonResult result = 1;
+  string change_password_url = 2;
 }
 
 message TokenResponse {
