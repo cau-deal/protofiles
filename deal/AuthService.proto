@@ -10,6 +10,7 @@ service AuthService {
   rpc SignInWithToken (Empty) returns (SignInResponse);
   rpc SignUp (SignUpRequest) returns (SignUpResponse);
   rpc FindPassword (FindPasswordRequest) returns (FindPasswordResponse);
+  rpc CheckDuplicationEmail(CheckDuplicationEmailRequest) returns (CheckDuplicationEmailResponse);
 }
 
 /// REQUEST ///
@@ -32,6 +33,10 @@ message SignUpRequest {
 }
 
 message FindPasswordRequest {
+  string email = 1;
+}
+
+message CheckDuplicationEmailRequest {
   string email = 1;
 }
 
@@ -59,11 +64,17 @@ message SignUpResponse {
 
 message FindPasswordResponse {
   CommonResult result = 1;
+  string change_password_url = 2;
 }
 
 message TokenResponse {
   CommonResult result = 1;
   JWTResult jwt = 2;
+}
+
+message CheckDuplicationEmailResponse {
+  CommonResult result = 1;
+  isDuplicationEmail is_duplication_email = 2;
 }
 
 /// ENUM ///
@@ -77,4 +88,13 @@ enum JWTType {
   UNKNOWN_JWT_TYPE = 0;
   ACCESS = 1;
   REFRESH = 2;
+}
+
+/*
+  이미 존재하는 이메일이면 true, 아니면 false
+*/
+enum isDuplicationEmail {
+  UNKNOWN_IS_DUPLICATION_EMAIL = 0;
+  TRUE_IS_DUPLICATION_EMAIL = 1;
+  FALSE_IS_DUPLICATION_EMAIL = 2;
 }
