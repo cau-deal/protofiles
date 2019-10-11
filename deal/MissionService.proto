@@ -5,7 +5,7 @@ import "Data.proto";
 import "Datetime.proto";
 
 /*
-  RegistMission : 의뢰 등록
+  RegisterMission : 의뢰 등록
   SearchMission : 의뢰 검색, type(전체, 수집, 가공)으로도 가능하고, 키워드(optional)로도 가능하다.
   --> 필터링 기능을 제공한다.(mission의 일부 정보)
   SearchMissionWithId : mission_id를 사용해 mission 검색(mission의 전체 정보)
@@ -15,7 +15,7 @@ import "Datetime.proto";
   SubmitProcessMissionOutput : 가공 의뢰 결과물 제출
 */
 service MissionService {
-  rpc RegistMission(RegistMissionRequest) returns (RegistMissionResponse);
+  rpc RegisterMission(RegisterMissionRequest) returns (RegisterMissionResponse);
   rpc SearchMission(SearchMissionRequest) returns (SearchMissionResponse);
   rpc SearchMissionWithId(MissionIdRequest) returns (SearchMissionWithIdReponse);
   rpc SearchMissionReleventMe(SearchMissionReleventMeRequest) returns (SearchMissionReleventMeResponse);
@@ -25,7 +25,7 @@ service MissionService {
 }
 
 /// REQUEST ///
-message RegistMissionRequest {
+message RegisterMissionRequest {
   Mission mission = 1;
 }
 
@@ -104,9 +104,9 @@ message MissionProto {
 }
 
 /// RESPONSE ///
-message RegistMissionResponse {
+message RegisterMissionResponse {
   CommonResult result = 1;
-  RegistMissionResult regist_mission_result = 2;
+  RegisterMissionResult register_mission_result = 2;
 }
 
 message SearchMissionResponse {
@@ -182,10 +182,10 @@ enum MissionType {
   PROCESS_MISSION_TYPE = 3;
 }
 
-enum RegistMissionResult {
-  UNKNOWN_REGIST_MISSION_RESULT = 0;
-  SUCCESS_REGIST_MISSION_RESULT = 1;
-  FAIL_REGIST_MISSION_RESULT = 2;
+enum RegisterMissionResult {
+  UNKNOWN_REGISTER_MISSION_RESULT = 0;
+  SUCCESS_REGISTER_MISSION_RESULT = 1;
+  FAIL_REGISTER_MISSION_RESULT = 2;
 }
 
 enum SearchMissionResult {
@@ -210,7 +210,7 @@ enum RelevantType {
   UNKNOWN_RELEVANT_TYPE = 0;
   ALL_RELEVANT_TYPE = 1;
   PROCESSING_RELEVANT_TYPE = 2;
-  REGIST_RELEVANT_TYPE = 3;
+  REGISTER_RELEVANT_TYPE = 3;
 }
 
 enum MissionPageMode {
