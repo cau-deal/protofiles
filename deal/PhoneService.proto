@@ -14,6 +14,7 @@ message PhoneAuthRequest {
   MobileCarrier mobile_carrier = 3;
   bool is_native = 4;
   Date birthday = 5;
+  Sex sex = 6;
 }
 
 /// Messages ///
