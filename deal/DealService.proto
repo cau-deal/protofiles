@@ -4,12 +4,14 @@ import "CommonResult.proto";
 import "Datetime.proto";
 import "Empty.proto";
 
+/*
+  Inquiry : 문의하기
+  LookUpInquiry : 문의 내역 조회하기
+  Accuse : 신고하기
+*/
 service DealService {
-  // 문의하기
   rpc Inquiry(InquiryRequest) returns (InquiryResponse);
-  // 문의 내역 조회하기
   rpc LookUpInquiry(Empty) returns (LookUpInquiryResponse);
-  // 신고하기
   rpc Accuse(AccuseRequest) returns (AccuseResponse);
 }
 
