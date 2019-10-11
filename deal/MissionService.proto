@@ -31,7 +31,7 @@ message RegisterMissionRequest {
 
 message SearchMissionRequest {
   MissionType type = 1;
-  string keyworkd = 2;						// 0개 또는 1개(optional)
+  string keyword = 2;						// 0개 또는 1개(optional)
   MissionPage mission_page = 3;
 }
 
