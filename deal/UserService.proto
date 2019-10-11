@@ -7,6 +7,7 @@ service UserService {
   rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
   rpc ChangePasswordWithEmail(ChangePasswordWithEmailRequest) returns (ChangePasswordResponse);
   rpc LookUpUserInfo(Empty) returns (LookUpUserInfoResponse);
+  rpc LookUpAuthInfo(Empty) returns (LookUpAuthInfoResponse);
 }
 
 /// REQUEST ///
@@ -37,6 +38,11 @@ message Profile {
   string name = 6;
 }
 
+message AuthInfo {
+  IsAuth is_phone_auth = 1;
+  IsAuth is_account_auth = 2;
+}
+
 /// RESPONSE ///
 message ChangePasswordResponse {
   CommonResult result = 1;
@@ -49,6 +55,11 @@ message ChangePasswordResponse {
 message LookUpUserInfoResponse {
   CommonResult result = 1;
   Profile profile = 2;
+}
+
+message LookUpAuthInfoResponse {
+  CommonResult result = 1;
+  AuthInfo auth_info = 2;
 }
 
 // ENUM ///
@@ -70,4 +81,10 @@ enum ChangePasswordResult {
   UNKNOWN_CHANGE_PASSWORD = 0;
   SUCCESS_CHANGE_PASSWORD = 1;
   FAIL_CHANGE_PASSWORD = 2;
+}
+
+enum IsAuth {
+  UNKNOWN_IS_AUTH = 0;
+  TRUE_IS_AUTH = 1;
+  FALSE_IS_AUTH = 2;
 }
