@@ -103,6 +103,12 @@ message MissionProto {
   string thumbnail_url = 15;					// 0개 또는 1개(optional)
 }
 
+message MissionPage {
+  MissionPageMode mission_page = 1;
+  int32 from = 2;
+  int32 amount = 3;
+}
+
 /// RESPONSE ///
 message RegisterMissionResponse {
   CommonResult result = 1;
@@ -142,12 +148,6 @@ message SubmitCollectMissionOutputResponse {
 message SubmitProcessMissionOutputResponse {
   CommonResult result = 1;
   SubmitResult submit_result = 2;
-}
-
-message MissionPage {
-  MissionPageMode mission_page = 1;
-  int32 from = 2;
-  int32 amount = 3;
 }
 
 /// ENUM ///
