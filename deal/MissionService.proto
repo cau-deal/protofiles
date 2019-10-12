@@ -30,7 +30,7 @@ message RegisterMissionRequest {
 }
 
 message SearchMissionRequest {
-  MissionType type = 1;
+  MissionType mission_type = 1;
   string keyword = 2;						// 0개 또는 1개(optional)
   MissionPage mission_page = 3;
 }
@@ -40,7 +40,7 @@ message MissionIdRequest {
 }
 
 message SearchMissionReleventMeRequest {
-  RelevantType type = 1;
+  RelevantType relevant_type = 1;
   MissionPage mission_page = 2;
 }
 
@@ -99,7 +99,7 @@ message Mission {
 message MissionProto {
   int32 mission_id = 1;
   string title = 2;
-  MissionType type = 4;
+  MissionType mission_type = 4;
   int32 price_of_packge = 7;
   Datetime deadline = 8;
   string summary = 10;					// 0개 또는 1개(optional)
@@ -110,7 +110,7 @@ message MissionProto {
 
 message MissionPage {
   MissionPageMode mission_page = 1;
-  int32 from = 2;
+  int32 offset = 2;
   int32 amount = 3;
 }
 
