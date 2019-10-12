@@ -87,7 +87,8 @@ message Mission {
   string contact_clause = 11;						// 0개 또는 1개(optional)
   string specification = 12;						// 0개 또는 1개(optional)
   repeated MissionExplanationImage mission_explanation_images = 13;	// 0개 이상.
-  Datetime created_at = 14;
+  MissionState mission_state = 14
+  Datetime created_at = 15;
 }
 
 /*
@@ -100,7 +101,8 @@ message MissionProto {
   int32 price_of_packge = 7;
   Datetime deadline = 8;
   string summary = 10;					// 0개 또는 1개(optional)
-  string thumbnail_url = 15;					// 0개 또는 1개(optional)
+  Datetime created_at = 15;
+  string thumbnail_url = 16;					// 0개 또는 1개(optional)
 }
 
 message MissionPage {
@@ -130,9 +132,7 @@ message SearchMissionWithIdReponse {
 message SearchMissionReleventMeResponse {
   CommonResult result = 1;
   SearchMissionResult search_mission_result = 2;
-  // 순서가 동일해야 한다.
   repeated MissionProto mission_protoes = 3;				// 0개 이상
-  repeated MissionState mission_states = 4;				// 0개 이상
 }
 
 message GetAssignedMissionResponse {
@@ -173,6 +173,15 @@ enum MissionState {
   SOLD_OUT = 2;
   WATING_CONFIRM_PURCHASE = 3;
   COMPLETE_MISSION = 4;
+}
+
+enum ConductMissionState {
+  UNKNOWN_CONDUCT_MISSION_STATE = 0;
+  DURING_MISSION_CONDUCT_MISSION_STATE = 1;
+  WAITING_VERIFICATION_CONDUCT_MISSION_STATE = 2;
+  DURING_VERIFICATION_CONDUCT_MISSION_STATE = 3;
+  COMPLETE_VERIFICATION_CONDUCT_MISSION_STATE = 4;
+  RETURN_VERIFICATION_CONDUCT_MISSION_STATE = 5;
 }
 
 enum MissionType {

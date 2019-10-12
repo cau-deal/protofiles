@@ -2,7 +2,7 @@
 
 message Data {
   string url = 1;
-  int32 mission_id = 2;
+  int32 conduct_mission_id = 2;
   DataState state = 3;
 }
 
