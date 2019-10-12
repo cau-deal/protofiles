@@ -72,6 +72,8 @@ message SubmitProcessMissionOutputRequest {
   specification : 미션 데이터에 대한 구체적인 명세. ex1> 신호등의 모습이 사진의 각각 가로와 세로의 절반 이상이어야 함.
                                                                ex2> 음성 수집 미션에서의 지시문 등
   mission_explanation_image : 미션에 대한 썸네일, 배경, 본문에 들어갈 이미지들 (0개 ~ many)
+  mission_state : 미션의 상태. 진행 중인지 완료인지 등
+  created_at : 미션 등록일
 */
 message Mission {
   int32 mission_id = 1;
@@ -101,6 +103,7 @@ message MissionProto {
   int32 price_of_packge = 7;
   Datetime deadline = 8;
   string summary = 10;					// 0개 또는 1개(optional)
+  MissionState mission_state = 14;
   Datetime created_at = 15;
   string thumbnail_url = 16;					// 0개 또는 1개(optional)
 }
@@ -120,7 +123,7 @@ message RegisterMissionResponse {
 message SearchMissionResponse {
   CommonResult result = 1;
   SearchMissionResult search_mission_result = 2;
-  repeated MissionProto mission_ptoroes = 3;				// 0개 이상
+  repeated MissionProto mission_ptoroes = 3;			// 0개 이상
 }
 
 message SearchMissionWithIdReponse {
@@ -129,10 +132,16 @@ message SearchMissionWithIdReponse {
   Mission mission = 3;
 }
 
+/*
+  결과가 내가 등록한 의뢰일 경우(mission table 사용), MissionProto에 있는 MissionState를 이용하고,
+  결과가 내가 수락한 의뢰일 경우(conduct_mission table 사용), ConductMissionState를 사용한다.
+*/
 message SearchMissionReleventMeResponse {
   CommonResult result = 1;
   SearchMissionResult search_mission_result = 2;
+  // 순서가 보장되어야 한다.
   repeated MissionProto mission_protoes = 3;				// 0개 이상
+  repeated ConductMissionState conduct_mission_state = 4;		// 0개 이상(conduct_mission일 경우에만 사용)
 }
 
 message GetAssignedMissionResponse {
@@ -175,6 +184,18 @@ enum MissionState {
   COMPLETE_MISSION = 4;
 }
 
+/*
+  * ConductState 전이에 대한 설명
+
+  (* State *), [ Event ]
+  1. DURING_MISSION (진행 중)
+  2. WAITING_VERIFICATION(검수 대기중)
+  3. DURING_VERIFICATION(검수 진행중)
+  4. COMPLETE_MISSION (완료)
+  5. RETURN_VERIFICATION (반려)
+  6. FAIL_MISSION (미션 실패, ex> 시간 초과)
+
+*/
 enum ConductMissionState {
   UNKNOWN_CONDUCT_MISSION_STATE = 0;
   DURING_MISSION_CONDUCT_MISSION_STATE = 1;
@@ -182,6 +203,7 @@ enum ConductMissionState {
   DURING_VERIFICATION_CONDUCT_MISSION_STATE = 3;
   COMPLETE_VERIFICATION_CONDUCT_MISSION_STATE = 4;
   RETURN_VERIFICATION_CONDUCT_MISSION_STATE = 5;
+  FAIL_MISSION_CONDUCT_MISSION_STATE = 6;
 }
 
 enum MissionType {
@@ -217,7 +239,7 @@ enum SubmitResult {
 
 enum RelevantType {
   UNKNOWN_RELEVANT_TYPE = 0;
-  ALL_RELEVANT_TYPE = 1;
+  ALL_RELEVANT_TYPE = 1;						//DEPRECIATED
   PROCESSING_RELEVANT_TYPE = 2;
   REGISTER_RELEVANT_TYPE = 3;
 }
