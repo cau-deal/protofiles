@@ -89,7 +89,7 @@ message Mission {
   string contact_clause = 11;						// 0개 또는 1개(optional)
   string specification = 12;						// 0개 또는 1개(optional)
   repeated MissionExplanationImage mission_explanation_images = 13;	// 0개 이상.
-  MissionState mission_state = 14
+  MissionState mission_state = 14;
   Datetime created_at = 15;
 }
 
