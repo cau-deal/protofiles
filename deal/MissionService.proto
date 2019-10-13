@@ -100,7 +100,7 @@ message MissionProto {
   int32 mission_id = 1;
   string title = 2;
   MissionType mission_type = 4;
-  int32 price_of_packge = 7;
+  int32 price_of_package = 7;
   Datetime deadline = 8;
   string summary = 10;					// 0개 또는 1개(optional)
   MissionState mission_state = 14;
