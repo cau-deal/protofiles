@@ -126,7 +126,7 @@ message SearchMissionResponse {
   repeated MissionProto mission_protoes = 3;			// 0개 이상
 }
 
-message SearchMissionWithIdReponse {
+message SearchMissionWithIdResponse {
   CommonResult result = 1;
   SearchMissionResult search_mission_result = 2;
   Mission mission = 3;
