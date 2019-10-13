@@ -17,7 +17,7 @@ import "Datetime.proto";
 service MissionService {
   rpc RegisterMission(RegisterMissionRequest) returns (RegisterMissionResponse);
   rpc SearchMission(SearchMissionRequest) returns (SearchMissionResponse);
-  rpc SearchMissionWithId(MissionIdRequest) returns (SearchMissionWithIdReponse);
+  rpc SearchMissionWithId(MissionIdRequest) returns (SearchMissionWithIdResponse);
   rpc SearchMissionReleventMe(SearchMissionReleventMeRequest) returns (SearchMissionReleventMeResponse);
   rpc GetAssignedMission(MissionIdRequest) returns (GetAssignedMissionResponse);
   rpc SubmitCollectMissionOutput(SubmitCollectMissionOutputRequest) returns (SubmitCollectMissionOutputResponse);
