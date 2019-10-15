@@ -74,7 +74,7 @@ message TokenResponse {
 
 message CheckDuplicationEmailResponse {
   CommonResult result = 1;
-  isDuplicationEmail is_duplication_email = 2;
+  IsDuplicationEmail is_duplication_email = 2;
 }
 
 /// ENUM ///
@@ -93,7 +93,7 @@ enum JWTType {
 /*
   이미 존재하는 이메일이면 true, 아니면 false
 */
-enum isDuplicationEmail {
+enum IsDuplicationEmail {
   UNKNOWN_IS_DUPLICATION_EMAIL = 0;
   TRUE_IS_DUPLICATION_EMAIL = 1;
   FALSE_IS_DUPLICATION_EMAIL = 2;
