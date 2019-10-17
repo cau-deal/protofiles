@@ -1,14 +1,33 @@
 ﻿syntax = "proto3";
 
 import "CommonResult.proto";
+import "Datetime.proto";
+import "Empty.proto";
 
+/*
+  PostNotice : 공지를 작성한다, 운영자만 실행 가능
+  CountNoReadPush : 읽지 않은 푸쉬의 개수를 반환한다.
+  GetPushList : 푸쉬 목록을 반환한다.
+  ReadPush : 특정 푸쉬를 읽음 처리한다.(푸쉬 내용은 이미 GetPushList에서 전달됌)
+*/
 service NotificationService {
   rpc PostNotice(PostNoticeRequest) returns (PostNoticeResponse);
+  rpc CountNoReadPush(Empty) returns (CountNoReadPushResponse);
+  rpc GetPushList(GetPushListRequest) returns (GetPushListResponse);
+  rpc ReadPush(ReadPushRequest) returns (ReadPushResponse);
 }
 
 /// REQUEST ///
 message PostNoticeRequest {
   Notice notice = 1;
+}
+
+message GetPushListRequest {
+  IsReadPushType is_read_push_type = 1;
+}
+
+message ReadPushRequest {
+  int32 push_id = 1;
 }
 
 /// Messages ///
@@ -17,10 +36,37 @@ message Notice {
   string content = 2;
 }
 
+message Push {
+  int32 id = 1;
+  string content = 2;
+  bool is_read = 3;
+  Datetime created_at = 4;
+}
+
 /// RESPONSE ///
 message PostNoticeResponse {
   CommonResult result = 1;
 }
 
+message CountNoReadPushResponse {
+  CommonResult result = 1;
+  int32 count = 2;
+}
+
+message GetPushListResponse {
+  CommonResult result = 1;
+  repeated Push push_list = 2;
+}
+
+message ReadPushResponse {
+  CommonResult result = 1;
+}
+
 
 /// ENUM ///
+enum IsReadPushType {
+  UNKNOWN_IS_READ_PUSH_TYPE = 0;
+  NOT_READ_IS_READ_PUSH_TYPE = 1;
+  READ_IS_READ_PUSH_TYPE = 2;
+  ALL_IS_READ_PUSH_TYPE = 3;
+}
