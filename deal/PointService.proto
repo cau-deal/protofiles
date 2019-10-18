@@ -70,7 +70,7 @@ message WithdrawResponse {
 
 // ENUM ///
 enum PointAlterReason {
-  UNKNOWN_PointPlusReason = 0;
+  UNKNOWN_POINT_ALTER_REASON = 0;
   DEPOSIT = 1;
   WITHDRAW = 2;
   COMPLETE_MISSION = 3;
