@@ -109,8 +109,8 @@ message MissionProto {
 }
 
 message MissionPage {
-  MissionPageMode mission_page = 1;
-  int32 offset = 2;
+  MissionPageMode mission_page_mode = 1;
+  int32 _offset = 2;
   int32 amount = 3;
 }
 
