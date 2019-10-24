@@ -14,8 +14,8 @@ message AccountAuthRequest {
 /// Messages ///
 message Account {
   string account_num = 1;
-  string name = 2;
-  BANK bank = 3;
+  BANK bank = 2;
+  string account_holder_info = 3;
 }
 
 /// RESPONSE ///
