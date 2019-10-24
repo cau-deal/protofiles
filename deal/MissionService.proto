@@ -18,7 +18,7 @@ service MissionService {
   rpc RegisterMission(RegisterMissionRequest) returns (RegisterMissionResponse);
   rpc SearchMission(SearchMissionRequest) returns (SearchMissionResponse);
   rpc SearchMissionWithId(MissionIdRequest) returns (SearchMissionWithIdResponse);
-  rpc SearchMissionReleventMe(SearchMissionReleventMeRequest) returns (SearchMissionReleventMeResponse);
+  rpc SearchMissionRelevantMe(SearchMissionRelevantMeRequest) returns (SearchMissionRelevantMeResponse);
   rpc GetAssignedMission(MissionIdRequest) returns (GetAssignedMissionResponse);
   rpc SubmitCollectMissionOutput(SubmitCollectMissionOutputRequest) returns (SubmitCollectMissionOutputResponse);
   rpc SubmitProcessMissionOutput(SubmitProcessMissionOutputRequest) returns (SubmitProcessMissionOutputResponse);
@@ -39,7 +39,7 @@ message MissionIdRequest {
   int32 mission_id = 1;
 }
 
-message SearchMissionReleventMeRequest {
+message SearchMissionRelevantMeRequest {
   RelevantType relevant_type = 1;
   MissionPage mission_page = 2;
 }
@@ -109,8 +109,8 @@ message MissionProto {
 }
 
 message MissionPage {
-  MissionPageMode mission_page = 1;
-  int32 offset = 2;
+  MissionPageMode mission_page_mode = 1;
+  int32 _offset = 2;
   int32 amount = 3;
 }
 
@@ -136,7 +136,7 @@ message SearchMissionWithIdResponse {
   결과가 내가 등록한 의뢰일 경우(mission table 사용), MissionProto에 있는 MissionState를 이용하고,
   결과가 내가 수락한 의뢰일 경우(conduct_mission table 사용), ConductMissionState를 사용한다.
 */
-message SearchMissionReleventMeResponse {
+message SearchMissionRelevantMeResponse {
   CommonResult result = 1;
   SearchMissionResult search_mission_result = 2;
   // 순서가 보장되어야 한다.
