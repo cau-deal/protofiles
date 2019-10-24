@@ -82,7 +82,7 @@ message Mission {
   MissionType mission_type = 4;
   DataType data_type = 5;
   int32 unit_package = 6;
-  int32 price_of_packge = 7;
+  int32 price_of_package = 7;
   Datetime deadline = 8;
   int32 order_package_quantity = 9;
   string summary = 10;						// 0개 또는 1개(optional)
