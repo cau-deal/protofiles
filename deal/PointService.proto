@@ -60,7 +60,7 @@ message LookUpPointHistoryResponse {
 
 message DepositResponse {
   CommonResult result = 1;
-  DepositResult deposite_result = 2;
+  DepositResult deposit_result = 2;
 }
 
 message WithdrawResponse {
