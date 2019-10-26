@@ -3,25 +3,30 @@
 import "CommonResult.proto";
 import "Data.proto";
 import "Datetime.proto";
+import "Empty.proto";
 
 /*
   RegisterMission : 의뢰 등록
   SearchMission : mission 검색, type(전체, 수집, 가공)으로도 가능하고, 키워드(optional)로도 가능하다.
   --> 필터링 기능을 제공한다.(mission의 일부 정보)
   SearchMissionWithId : mission_id를 사용해 mission 검색(mission의 전체 정보)
-  SearchMissionReleventMe : 마이페이지에 사용할 목적으로, 나와 관련된 Mission들을 조회(mission의 일부 정보)
+  SearchRegisterMissionReleventMe : 마이페이지에 사용할 목적으로, 내가 등록한 Mission들을 조회(mission의 일부 정보)
+  SearchConductMissionReleventMe : 마이페이지에 사용할 목적으로, 내가 수행중인 Mission들을 조회(mission의 일부 정보)
   GetAssignedMission : 의뢰를 수락
   SubmitCollectMissionOutput : 수집 의뢰 결과물 제출
   SubmitProcessMissionOutput : 가공 의뢰 결과물 제출
+  CountFetchMission : 하루 동안 벌어들인 수익 조회
 */
 service MissionService {
   rpc RegisterMission(RegisterMissionRequest) returns (RegisterMissionResponse);
   rpc SearchMission(SearchMissionRequest) returns (SearchMissionResponse);
   rpc SearchMissionWithId(MissionIdRequest) returns (SearchMissionWithIdResponse);
-  rpc SearchMissionRelevantMe(SearchMissionRelevantMeRequest) returns (SearchMissionRelevantMeResponse);
+  rpc SearchRegisterMissionRelevantMe(SearchMissionRelevantMeRequest) returns (SearchRegisterMissionRelevantMeResponse);
+  rpc SearchConductMissionRelevantMe(SearchMissionRelevantMeRequest) returns (SearchConductMissionRelevantMeResponse);
   rpc GetAssignedMission(MissionIdRequest) returns (GetAssignedMissionResponse);
   rpc SubmitCollectMissionOutput(SubmitCollectMissionOutputRequest) returns (SubmitCollectMissionOutputResponse);
   rpc SubmitProcessMissionOutput(SubmitProcessMissionOutputRequest) returns (SubmitProcessMissionOutputResponse);
+  rpc CountFetchMission(Empty) returns (CountFetchMissionResponse);
 }
 
 /// REQUEST ///
@@ -40,8 +45,7 @@ message MissionIdRequest {
 }
 
 message SearchMissionRelevantMeRequest {
-  RelevantType relevant_type = 1;
-  MissionPage mission_page = 2;
+  MissionPage mission_page = 1;
 }
 
 message SubmitCollectMissionOutputRequest {
@@ -74,9 +78,10 @@ message SubmitProcessMissionOutputRequest {
   mission_explanation_image : 미션에 대한 썸네일, 배경, 본문에 들어갈 이미지들 (0개 ~ many)
   mission_state : 미션의 상태. 진행 중인지 완료인지 등
   created_at : 미션 등록일
+  beginning : 미션 시작일
 */
 message Mission {
-  int32 mission_id = 1;
+  int32 mission_id = 1;						// request시 사용 X
   string title = 2;
   string contents = 3;
   MissionType mission_type = 4;
@@ -89,8 +94,9 @@ message Mission {
   string contact_clause = 11;						// 0개 또는 1개(optional)
   string specification = 12;						// 0개 또는 1개(optional)
   repeated MissionExplanationImage mission_explanation_images = 13;	// 0개 이상.
-  MissionState mission_state = 14;
-  Datetime created_at = 15;
+  MissionState mission_state = 14;					// request시 사용 X
+  Datetime created_at = 15;						// request시 사용 X
+  Datetime beginning = 17;
 }
 
 /*
@@ -106,6 +112,20 @@ message MissionProto {
   MissionState mission_state = 14;
   Datetime created_at = 15;
   string thumbnail_url = 16;					// 0개 또는 1개(optional)
+  Datetime beginning = 17;
+}
+
+message ConductMissionProto {
+  int32 mission_id = 1;
+  string title = 2;
+  MissionType mission_type = 4;
+  int32 price_of_package = 7;
+  Datetime deadline = 8;
+  string summary = 10;					// 0개 또는 1개(optional)
+  ConductMissionState conduct_mission_state = 18;
+  Datetime created_at = 15;
+  string thumbnail_url = 16;					// 0개 또는 1개(optional)
+  Datetime beginning = 17;
 }
 
 message MissionPage {
@@ -132,16 +152,16 @@ message SearchMissionWithIdResponse {
   Mission mission = 3;
 }
 
-/*
-  결과가 내가 등록한 의뢰일 경우(mission table 사용), MissionProto에 있는 MissionState를 이용하고,
-  결과가 내가 수락한 의뢰일 경우(conduct_mission table 사용), ConductMissionState를 사용한다.
-*/
-message SearchMissionRelevantMeResponse {
+message SearchRegisterMissionRelevantMeResponse {
   CommonResult result = 1;
   SearchMissionResult search_mission_result = 2;
-  // 순서가 보장되어야 한다.
   repeated MissionProto mission_protoes = 3;				// 0개 이상
-  repeated ConductMissionState conduct_mission_state = 4;		// 0개 이상(conduct_mission일 경우에만 사용)
+}
+
+message SearchConductMissionRelevantMeResponse {
+  CommonResult result = 1;
+  SearchMissionResult search_mission_result = 2;
+  repeated ConductMissionProto conduct_mission_protoes = 3;		// 0개 이상
 }
 
 message GetAssignedMissionResponse {
@@ -159,6 +179,11 @@ message SubmitProcessMissionOutputResponse {
   SubmitResult submit_result = 2;
 }
 
+message CountFetchMissionResponse {
+  CommonResult result = 1;
+  int64 val = 2;
+}
+
 /// ENUM ///
 /*
   * MissionState 전이에 대한 설명
@@ -168,12 +193,13 @@ message SubmitProcessMissionOutputResponse {
   2. SOLD_OUT (매진, 미션이 완료되지는 않았지만 작업자에게 할당 불가능(모두 할당되어 진행중인 상태))
   3. WATING_CONFIRM_PURCHASE (구매 확정 대기)
   4. COMPLETE_MISSION (완료)
+  5. WATRING_REGISTER (등록 대기)
 
   # 미션 State 전이
   ==[가공 미션 등록]==> (* 1. 진행 중 *)
   ==[모두 할당됨]==> (* 2. 매진 *) <==[반려 발생]==
   ==[가공 완료]==> (* 3. 구매확정 대기 *)
-  ==[구매 최종 결정]==> (* 5. 완료 *)
+  ==[구매 최종 결정]==> (* 4. 완료 *)
 
 */
 enum MissionState {
@@ -182,6 +208,7 @@ enum MissionState {
   SOLD_OUT = 2;
   WATING_CONFIRM_PURCHASE = 3;
   COMPLETE_MISSION = 4;
+  WATRING_REGISTER = 5;
 }
 
 /*
@@ -235,13 +262,6 @@ enum SubmitResult {
   UNKNOWN_SUBMIT_RESULT = 0;
   SUCCESS_SUBMIT_RESULT = 1;
   FAIL_SUBMIT_RESUlT = 2;
-}
-
-enum RelevantType {
-  UNKNOWN_RELEVANT_TYPE = 0;
-  ALL_RELEVANT_TYPE = 1;						//DEPRECIATED
-  PROCESSING_RELEVANT_TYPE = 2;
-  REGISTER_RELEVANT_TYPE = 3;
 }
 
 enum MissionPageMode {
