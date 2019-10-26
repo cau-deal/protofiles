@@ -10,6 +10,7 @@ service PointService {
   rpc LookUpMinusPointHistory(LookUpPointHistoryRequest) returns (LookUpPointHistoryResponse);
   rpc Deposit(DepositRequest) returns (DepositResponse);
   rpc Withdraw(WithdrawRequest) returns (WithdrawResponse);
+  rpc LookUpEarnForADay(Empty) returns (LookUpEarnForADayResponse);
 }
 
 /// REQUEST ///
@@ -66,6 +67,11 @@ message DepositResponse {
 message WithdrawResponse {
   CommonResult result = 1;
   WithdrawResult withdraw_result = 2;
+}
+
+message LookUpEarnForADayResponse {
+  CommonResult result = 1;
+  int64 val = 2;
 }
 
 // ENUM ///
