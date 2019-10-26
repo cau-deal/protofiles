@@ -96,7 +96,7 @@ message Mission {
   repeated MissionExplanationImage mission_explanation_images = 13;	// 0개 이상.
   MissionState mission_state = 14;					// request시 사용 X
   Datetime created_at = 15;						// request시 사용 X
-  Datetime beginning = 17;
+  Datetime beginning = 16;
 }
 
 /*
