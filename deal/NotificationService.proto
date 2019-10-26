@@ -9,7 +9,7 @@ import "Empty.proto";
   CountNoReadPush : 읽지 않은 푸쉬의 개수를 반환한다.
   GetPushList : 푸쉬 목록을 반환한다.
   ReadPush : 특정 푸쉬를 읽음 처리한다.(푸쉬 내용은 이미 GetPushList에서 전달됌)
-  
+  TransmitFCM : fcm 키 값을 전송한다.
 */
 service NotificationService {
   rpc PostNotice(PostNoticeRequest) returns (PostNoticeResponse);
