@@ -2,12 +2,14 @@
 
 import "CommonResult.proto";
 import "Empty.proto";
+import "Profile.proto";
 
 service UserService {
   rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
   rpc ChangePasswordWithEmail(ChangePasswordWithEmailRequest) returns (ChangePasswordResponse);
   rpc LookUpUserInfo(Empty) returns (LookUpUserInfoResponse);
   rpc LookUpAuthInfo(Empty) returns (LookUpAuthInfoResponse);
+  rpc UpdateProfilePhotoURL(UpdateProfilePhotoURLRequest) returns (UpdateProfilePhotoURLResponse);
 }
 
 /// REQUEST ///
@@ -28,16 +30,14 @@ message ChangePasswordWithEmailRequest {
   string new_password = 3;
 }
 
-/// Messages ///
-message Profile {
-  string email = 1;
-  int32 level = 2;
-  UserState state = 3;
-  Role role = 4;
-  string profile_photo_url = 5;
-  string name = 6;
+/*
+  프로필 사진 갱신
+*/
+message UpdateProfilePhotoURLRequest {
+  string profile_photo_url = 1;
 }
 
+/// Messages ///
 message AuthInfo {
   IsAuth is_phone_auth = 1;
   IsAuth is_account_auth = 2;
@@ -62,21 +62,11 @@ message LookUpAuthInfoResponse {
   AuthInfo auth_info = 2;
 }
 
+message UpdateProfilePhotoURLResponse {
+  CommonResult result = 1;
+}
+
 // ENUM ///
-enum UserState {
-  UNKNOWN_USER_STATE = 0;
-  NORMAL = 1;
-  BANNED = 2;
-  DELETED = 3;
-}
-
-enum Role {
-  UNKNOWN_ROLE = 0;
-  USER = 1;
-  MANAGER = 2;
-  ROOT = 3;
-}
-
 enum ChangePasswordResult {
   UNKNOWN_CHANGE_PASSWORD = 0;
   SUCCESS_CHANGE_PASSWORD = 1;

@@ -4,6 +4,7 @@ import "CommonResult.proto";
 import "Data.proto";
 import "Datetime.proto";
 import "Empty.proto";
+import "Profile.proto";
 
 /*
   RegisterMission : 의뢰 등록
@@ -16,6 +17,7 @@ import "Empty.proto";
   SubmitCollectMissionOutput : 수집 의뢰 결과물 제출
   SubmitProcessMissionOutput : 가공 의뢰 결과물 제출
   CountFetchMission : 완료되지 않은 미션의 개수 반환(마이페이지에 미션 갯수에 들어갈 용도)
+  GetMissionOwnerInfo : mission 번호 넣으면, 등록자의 정보를 반환
 */
 service MissionService {
   rpc RegisterMission(RegisterMissionRequest) returns (RegisterMissionResponse);
@@ -27,6 +29,7 @@ service MissionService {
   rpc SubmitCollectMissionOutput(SubmitCollectMissionOutputRequest) returns (SubmitCollectMissionOutputResponse);
   rpc SubmitProcessMissionOutput(SubmitProcessMissionOutputRequest) returns (SubmitProcessMissionOutputResponse);
   rpc CountFetchMission(Empty) returns (CountFetchMissionResponse);
+  rpc GetMissionOwnerInfo(MissionIdRequest) returns (GetMissionOwnerInfoResponse);
 }
 
 /// REQUEST ///
@@ -182,6 +185,11 @@ message SubmitProcessMissionOutputResponse {
 message CountFetchMissionResponse {
   CommonResult result = 1;
   int64 val = 2;
+}
+
+message GetMissionOwnerInfoResponse {
+  CommonResult result = 1;
+  Profile register_profile = 2;
 }
 
 /// ENUM ///
