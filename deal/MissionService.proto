@@ -15,7 +15,7 @@ import "Empty.proto";
   GetAssignedMission : 의뢰를 수락
   SubmitCollectMissionOutput : 수집 의뢰 결과물 제출
   SubmitProcessMissionOutput : 가공 의뢰 결과물 제출
-  CountFetchMission : 하루 동안 벌어들인 수익 조회
+  CountFetchMission : 완료되지 않은 미션의 개수 반환(마이페이지에 미션 갯수에 들어갈 용도)
 */
 service MissionService {
   rpc RegisterMission(RegisterMissionRequest) returns (RegisterMissionResponse);
@@ -193,7 +193,7 @@ message CountFetchMissionResponse {
   2. SOLD_OUT (매진, 미션이 완료되지는 않았지만 작업자에게 할당 불가능(모두 할당되어 진행중인 상태))
   3. WATING_CONFIRM_PURCHASE (구매 확정 대기)
   4. COMPLETE_MISSION (완료)
-  5. WATRING_REGISTER (등록 대기)
+  5. WAITING_REGISTER (등록 대기)
 
   # 미션 State 전이
   ==[가공 미션 등록]==> (* 1. 진행 중 *)
@@ -208,7 +208,7 @@ enum MissionState {
   SOLD_OUT = 2;
   WATING_CONFIRM_PURCHASE = 3;
   COMPLETE_MISSION = 4;
-  WATRING_REGISTER = 5;
+  WAITING_REGISTER = 5;
 }
 
 /*
