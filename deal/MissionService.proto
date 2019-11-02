@@ -194,6 +194,11 @@ message GetMissionOwnerInfoResponse {
   Profile register_profile = 2;
 }
 
+message GetParticipatedMissionStateResponse {
+  CommonResult result = 1;
+  ConductMissionState conduct_mission_state = 2;
+}
+
 /// ENUM ///
 /*
   * MissionState 전이에 대한 설명
