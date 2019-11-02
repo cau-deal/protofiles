@@ -236,7 +236,7 @@ enum MissionState {
   4. COMPLETE_MISSION (완료)
   5. RETURN_VERIFICATION (반려)
   6. FAIL_MISSION (미션 실패, ex> 시간 초과)
-
+  7. INIT( 아직 한 번도 해당 미션을 받은 적이 없는 상태)
 */
 enum ConductMissionState {
   UNKNOWN_CONDUCT_MISSION_STATE = 0;
@@ -246,6 +246,7 @@ enum ConductMissionState {
   COMPLETE_VERIFICATION_CONDUCT_MISSION_STATE = 4;
   RETURN_VERIFICATION_CONDUCT_MISSION_STATE = 5;
   FAIL_MISSION_CONDUCT_MISSION_STATE = 6;
+  INIT_CONDUCT_MISSION_STATE = 7;
 }
 
 enum MissionType {
