@@ -18,6 +18,7 @@ import "Profile.proto";
   SubmitProcessMissionOutput : 가공 의뢰 결과물 제출
   CountFetchMission : 완료되지 않은 미션의 개수 반환(마이페이지에 미션 갯수에 들어갈 용도)
   GetMissionOwnerInfo : mission 번호 넣으면, 등록자의 정보를 반환
+  GetParticipatedMissionState : mission 번호 넣으면, 현재 사용자의 해당 미션에 대한 상태를 반환해준다.
 */
 service MissionService {
   rpc RegisterMission(RegisterMissionRequest) returns (RegisterMissionResponse);
@@ -30,6 +31,7 @@ service MissionService {
   rpc SubmitProcessMissionOutput(SubmitProcessMissionOutputRequest) returns (SubmitProcessMissionOutputResponse);
   rpc CountFetchMission(Empty) returns (CountFetchMissionResponse);
   rpc GetMissionOwnerInfo(MissionIdRequest) returns (GetMissionOwnerInfoResponse);
+  rpc GetParticipatedMissionState(MissionIdRequest) returns (GetParticipatedMissionStateResponse);
 }
 
 /// REQUEST ///
