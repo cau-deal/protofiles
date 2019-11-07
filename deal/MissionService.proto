@@ -37,6 +37,7 @@ service MissionService {
 /// REQUEST ///
 message RegisterMissionRequest {
   Mission mission = 1;
+  repeated Data datas = 2						// 0개 또는 1개 이상(가공 미션일 때만 사용)
 }
 
 message SearchMissionRequest {
@@ -55,8 +56,8 @@ message SearchMissionRelevantMeRequest {
 
 message SubmitCollectMissionOutputRequest {
   int32 mission_id = 1;
-  // data 자체가 복수형이지만, repeated를 강조하기 위해 's'를 붙임 
-  repeated Data datas = 2;						// 0개 이상
+  // data 자체가 복수형이지만, repeated를 강조하기 위해 's'를 붙임
+  repeated Data Datas = 2;						// 0개 이상
 }
 
 message SubmitProcessMissionOutputRequest {
