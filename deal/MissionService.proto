@@ -38,6 +38,7 @@ service MissionService {
 message RegisterMissionRequest {
   Mission mission = 1;
   repeated Data datas = 2;						// 0개 또는 1개 이상(가공 미션일 때만 사용)
+  repeated string labels = 3;						// 0개 또는 1개 이상(가공 미션일 때만 사용)
 }
 
 message SearchMissionRequest {
