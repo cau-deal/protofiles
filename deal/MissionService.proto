@@ -58,7 +58,7 @@ message SearchMissionRelevantMeRequest {
 message SubmitCollectMissionOutputRequest {
   int32 mission_id = 1;
   // data 자체가 복수형이지만, repeated를 강조하기 위해 's'를 붙임
-  repeated Data Datas = 2;						// 0개 이상
+  repeated Data datas = 2;						// 0개 이상
 }
 
 message SubmitProcessMissionOutputRequest {
