@@ -32,6 +32,7 @@ service MissionService {
   rpc CountFetchMission(Empty) returns (CountFetchMissionResponse);
   rpc GetMissionOwnerInfo(MissionIdRequest) returns (GetMissionOwnerInfoResponse);
   rpc GetParticipatedMissionState(MissionIdRequest) returns (GetParticipatedMissionStateResponse);
+  rpc GetLabels(MissionIdRequest) returns (GetLabelsResponse);
 }
 
 /// REQUEST ///
@@ -199,6 +200,11 @@ message GetMissionOwnerInfoResponse {
 message GetParticipatedMissionStateResponse {
   CommonResult result = 1;
   ConductMissionState conduct_mission_state = 2;
+}
+
+message GetLabelsResponse {
+  CommonResult result = 1;
+  repeated string labels = 2;
 }
 
 /// ENUM ///
