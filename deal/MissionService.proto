@@ -19,6 +19,8 @@ import "Profile.proto";
   CountFetchMission : 완료되지 않은 미션의 개수 반환(마이페이지에 미션 갯수에 들어갈 용도)
   GetMissionOwnerInfo : mission 번호 넣으면, 등록자의 정보를 반환
   GetParticipatedMissionState : mission 번호 넣으면, 현재 사용자의 해당 미션에 대한 상태를 반환해준다.
+  GetLabels : 가공 미션인 경우 해당 미션에 대한 레이블 목록을 조회
+  GetLabelingResult : 가공 미션에서 url에 대한 labeling 결과 조회
 */
 service MissionService {
   rpc RegisterMission(RegisterMissionRequest) returns (RegisterMissionResponse);
@@ -33,6 +35,7 @@ service MissionService {
   rpc GetMissionOwnerInfo(MissionIdRequest) returns (GetMissionOwnerInfoResponse);
   rpc GetParticipatedMissionState(MissionIdRequest) returns (GetParticipatedMissionStateResponse);
   rpc GetLabels(MissionIdRequest) returns (GetLabelsResponse);
+  rpc GetLabelingResult(UrlRequest) returns (GetLabelingResultResponse);
 }
 
 /// REQUEST ///
@@ -66,6 +69,10 @@ message SubmitProcessMissionOutputRequest {
   int32 mission_id = 1;
   // data 자체가 복수형이지만, repeated를 강조하기 위해 's'를 붙임
   repeated ProcessedImageData datas = 2;				// 0개 이상
+}
+
+message UrlRequest {
+  string url = 1;
 }
 
 /// Messages ///
@@ -205,6 +212,11 @@ message GetParticipatedMissionStateResponse {
 message GetLabelsResponse {
   CommonResult result = 1;
   repeated string labels = 2;
+}
+
+message GetLabelingResultResponse {
+  CommonResult result = 1;
+  string label_result = 2;
 }
 
 /// ENUM ///
