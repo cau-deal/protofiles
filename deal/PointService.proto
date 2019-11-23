@@ -62,6 +62,7 @@ message LookUpPointHistoryResponse {
 message DepositResponse {
   CommonResult result = 1;
   DepositResult deposit_result = 2;
+  string kakaopay_url = 3;			// optional(kakao pay 일때만 사용)
 }
 
 message WithdrawResponse {
