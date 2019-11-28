@@ -21,6 +21,7 @@ import "Profile.proto";
   GetParticipatedMissionState : mission 번호 넣으면, 현재 사용자의 해당 미션에 대한 상태를 반환해준다.
   GetLabels : 가공 미션인 경우 해당 미션에 대한 레이블 목록을 조회
   GetLabelingResult : 가공 미션에서 url에 대한 labeling 결과 조회
+  GetRecommendMissionImages : 추천 미션의 image url 조회
 */
 service MissionService {
   rpc RegisterMission(RegisterMissionRequest) returns (RegisterMissionResponse);
@@ -36,6 +37,7 @@ service MissionService {
   rpc GetParticipatedMissionState(MissionIdRequest) returns (GetParticipatedMissionStateResponse);
   rpc GetLabels(MissionIdRequest) returns (GetLabelsResponse);
   rpc GetLabelingResult(UrlRequest) returns (GetLabelingResultResponse);
+  rpc GetRecommendMissionImages(Empty) returns (GetRecommendMissionImagesResponse);
 }
 
 /// REQUEST ///
@@ -143,6 +145,11 @@ message ConductMissionProto {
   Datetime beginning = 17;
 }
 
+message MissionRecommendImage {
+  int32 mission_id = 1;
+  string recommend_image_url = 2;
+}
+
 message MissionPage {
   MissionPageMode mission_page_mode = 1;
   int32 _offset = 2;
@@ -217,6 +224,11 @@ message GetLabelsResponse {
 message GetLabelingResultResponse {
   CommonResult result = 1;
   string label_result = 2;
+}
+
+message GetRecommendMissionImagesResponse {
+  CommonResult result = 1;
+  repeated MissionRecommendImage mission_recommend_images = 2; 
 }
 
 /// ENUM ///
