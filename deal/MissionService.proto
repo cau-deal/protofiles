@@ -38,7 +38,7 @@ service MissionService {
   rpc GetLabels(MissionIdRequest) returns (GetLabelsResponse);
   rpc GetLabelingResult(UrlRequest) returns (GetLabelingResultResponse);
   rpc GetRecommendMissionImages(Empty) returns (GetRecommendMissionImagesResponse);
-  rpc DeciedPurchase(DeciedPurchaseRequest) returns (DeciedPurchaseResponse);
+  rpc DecidePurchase(DecidePurchaseRequest) returns (DecidePurchaseResponse);
 }
 
 /// REQUEST ///
@@ -78,7 +78,7 @@ message UrlRequest {
   string url = 1;
 }
 
-message DeciedPurchaseRequest {
+message DecidePurchaseRequest {
   int32 mission_id = 1;
   DecidePurchaseDistractor decide_purchase_distractor = 2;
 }
@@ -237,7 +237,7 @@ message GetRecommendMissionImagesResponse {
   repeated MissionRecommendImage mission_recommend_images = 2; 
 }
 
-message DeciedPurchaseResponse {
+message DecidePurchaseResponse {
   CommonResult result = 1;
 }
 
