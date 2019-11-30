@@ -329,7 +329,7 @@ enum MissionPageMode {
 }
 
 enum DecidePurchaseDistractor {
-  UNKNOWN DECIDE_PURCHASE_DISTRACTOR = 0;
+  UNKNOWN_DECIDE_PURCHASE_DISTRACTOR = 0;
   DECIDE_OK = 1;
   DECIDE_RETURN = 2;
 }
