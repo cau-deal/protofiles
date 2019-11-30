@@ -38,6 +38,7 @@ service MissionService {
   rpc GetLabels(MissionIdRequest) returns (GetLabelsResponse);
   rpc GetLabelingResult(UrlRequest) returns (GetLabelingResultResponse);
   rpc GetRecommendMissionImages(Empty) returns (GetRecommendMissionImagesResponse);
+  rpc DeciedPurchase(DeciedPurchaseRequest) returns (DeciedPurchaseResponse);
 }
 
 /// REQUEST ///
@@ -75,6 +76,11 @@ message SubmitProcessMissionOutputRequest {
 
 message UrlRequest {
   string url = 1;
+}
+
+message DeciedPurchaseRequest {
+  int32 mission_id = 1;
+  DecidePurchaseDistractor decide_purchase_distractor = 2;
 }
 
 /// Messages ///
@@ -231,6 +237,10 @@ message GetRecommendMissionImagesResponse {
   repeated MissionRecommendImage mission_recommend_images = 2; 
 }
 
+message DeciedPurchaseResponse {
+  CommonResult result = 1;
+}
+
 /// ENUM ///
 /*
   * MissionState 전이에 대한 설명
@@ -316,5 +326,11 @@ enum MissionPageMode {
   UNKNOWN_MISSION_PAGE_MODE = 0;
   INITIALIZE_MISSION_PAGE = 1;
   FETCH_MISSION_PAGE = 2;
+}
+
+enum DecidePurchaseDistractor {
+  UNKNOWN DECIDE_PURCHASE_DISTRACTOR = 0;
+  DECIDE_OK = 1;
+  DECIDE_RETURN = 2;
 }
 
