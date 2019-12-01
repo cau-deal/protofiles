@@ -39,6 +39,7 @@ service MissionService {
   rpc GetLabelingResult(UrlRequest) returns (GetLabelingResultResponse);
   rpc GetRecommendMissionImages(Empty) returns (GetRecommendMissionImagesResponse);
   rpc DecidePurchase(DecidePurchaseRequest) returns (DecidePurchaseResponse);
+  rpc GetProcessMissionImages(MissionIdRequest) returns (GetProcessMissionImagesResponse);
 }
 
 /// REQUEST ///
@@ -239,6 +240,11 @@ message GetRecommendMissionImagesResponse {
 
 message DecidePurchaseResponse {
   CommonResult result = 1;
+}
+
+message GetProcessMissionImagesResponse {
+  CommonResult result = 1;
+  repeated string urls = 2;
 }
 
 /// ENUM ///
