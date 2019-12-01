@@ -46,6 +46,7 @@ message PointHistory {
   int64 val = 1;
   PointAlterReason point_alter_reason = 2;
   Datetime created_at = 3;
+  string reason_detail = 4;
 }
 
 /// RESPONSE ///
