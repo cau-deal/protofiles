@@ -38,8 +38,17 @@ service MissionService {
   rpc GetLabels(MissionIdRequest) returns (GetLabelsResponse);
   rpc GetLabelingResult(UrlRequest) returns (GetLabelingResultResponse);
   rpc GetRecommendMissionImages(Empty) returns (GetRecommendMissionImagesResponse);
-  rpc DecidePurchase(DecidePurchaseRequest) returns (DecidePurchaseResponse);
   rpc GetProcessMissionImages(MissionIdRequest) returns (GetProcessMissionImagesResponse);
+
+  /// depreciated
+  rpc DecidePurchase(DecidePurchaseRequest) returns (DecidePurchaseResponse);
+
+  rpc GetDatasToValid(GetDatasToValidRequest) returns (GetDatasToValidResponse);
+  rpc SetDatasToValid(SetDatasToValidRequest) returns (SetDatasToValidResponse);
+  rpc GetMissionDatasToValid(GetMissionDatasToValidRequest) returns (GetMissionDatasToValidResponse);
+  rpc SetMissionDatasToValid(SetMissionDatasToValidRequest) returns (SetMissionDatasToValidResponse);
+  rpc RegisterSurveyMission(RegisterSurveyMissionRequest) returns (RegisterSurveyMissionResponse);
+  rpc GetSurveyId(MissionIdRequest) returns (GetSurveyIdResponse);
 }
 
 /// REQUEST ///
@@ -84,6 +93,31 @@ message DecidePurchaseRequest {
   DecidePurchaseDistractor decide_purchase_distractor = 2;
 }
 
+message GetDatasToValidRequest {
+  MissionType mission_type = 1;
+  DataType data_type = 2;
+}
+
+message SetDatasToValidRequest {
+  MissionType mission_type = 1;
+  DataType data_type = 2;
+  int32 conduct_mission_id = 3;
+  DecideValidation decide_validation = 4;
+}
+
+message GetMissionDatasToValidRequest {
+  int32 mission_id = 1;
+}
+
+message SetMissionDatasToValidRequest {
+  int32 mission_id = 1;
+  DecideValidation decide_validation = 2;
+}
+
+message RegisterSurveyMissionRequest {
+  Mission mission = 1;
+}
+
 /// Messages ///
 /*
   mission_id : mission에 대한 식별자. 고유 번호
@@ -121,6 +155,7 @@ message Mission {
   MissionState mission_state = 14;					// request시 사용 X
   Datetime created_at = 15;						// request시 사용 X
   Datetime beginning = 16;
+  int32 survey_id = 17;						// survey mission에서만 사용
 }
 
 /*
@@ -247,6 +282,33 @@ message GetProcessMissionImagesResponse {
   repeated string urls = 2;
 }
 
+message GetDatasToValidResponse {
+  CommonResult result = 1;
+  int32 conduct_mission_id = 2;
+  repeated string datas = 3;
+  repeated string labels = 4;				// 가공 미션일 때만 존재
+}
+
+message SetDatasToValidResponse {
+  CommonResult result = 1;
+}
+
+message GetMissionDatasToValidResponse {
+  CommonResult result = 1;
+  int32 mission_id = 2;
+  repeated string datas = 3;
+  repeated string labels = 4;				// 가공 미션일 때만 존재
+}
+
+message SetMissionDatasToValidResponse {
+  CommonResult result = 1;
+}
+
+message GetSurveyIdResponse {
+  CommonResult result = 1;
+  int32 survey_id = 2;
+}
+
 /// ENUM ///
 /*
   * MissionState 전이에 대한 설명
@@ -339,6 +401,12 @@ enum MissionPageMode {
 
 enum DecidePurchaseDistractor {
   UNKNOWN_DECIDE_PURCHASE_DISTRACTOR = 0;
+  DECIDE_OK = 1;
+  DECIDE_RETURN = 2;
+}
+
+enum DecideValidation {
+  UNKNOWN_DECIDE_VALIDATION = 0;
   DECIDE_OK = 1;
   DECIDE_RETURN = 2;
 }
